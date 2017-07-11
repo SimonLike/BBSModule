@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GDModuleHomeVC.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    GDModuleHomeVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDModuleHome"];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.viewController = nav;
+    [self.window setRootViewController:self.viewController];
+    [self.window makeKeyAndVisible];
     return YES;
 }
 

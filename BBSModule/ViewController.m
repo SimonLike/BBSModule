@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 
+#import "GDModuleHomeVC.h"
+
 @interface ViewController ()
 
 @end
@@ -17,6 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+}
+- (IBAction)click:(UIButton *)sender {
+    GDModuleHomeVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDModuleHome"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 
