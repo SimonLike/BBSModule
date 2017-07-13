@@ -16,6 +16,9 @@
 #define DLog(...)
 #endif
 
+#define USERINFO @"USERINFO"
+
+
 typedef NS_ENUM(NSUInteger, UploadVieoStyle) {
     VideoRecord = 0,
     VideoLocation,

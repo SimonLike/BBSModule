@@ -30,8 +30,24 @@
     return [objs firstObject];
 }
 - (IBAction)click:(UIButton *)sender {
+   
+    if (sender.tag == 11&&([self.textView.text isEqualToString:@""]||[self.textView.text isEqualToString:@"请输入文字"])) {
+        [SVProgressHUD showImage:nil status:@"请输入文字！"];
+        return;
+    }
+    
     if (_block) {
-        _block(sender.tag);
+        _block(sender.tag,self.textView.text);
+    }
+}
+- (void)textViewDidBeginEditing:(UITextView *)textView{
+    if ([textView.text isEqualToString:@"请输入文字"]) {
+        textView.text = @"";
+    }
+}
+- (void)textViewDidEndEditing:(UITextView *)textView{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"请输入文字";
     }
 }
 

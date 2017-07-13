@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GDReplyMeObj.h"
 
 @interface GDReplyToMyCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIView *bgView;
@@ -17,5 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *contLabel;
 @property (weak, nonatomic) IBOutlet UIView *pl_view;
 @property (weak, nonatomic) IBOutlet UILabel *pl_label;
+@property (nonatomic, assign) CGFloat heights;
 
+-(void)initWithReplyMeObj:(GDReplyMeObj *)obj;
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void(^TextAlertBlock)(NSInteger tag);
+typedef void(^TextAlertBlock)(NSInteger tag,NSString *text);
 
 @interface GDTextAlertView : UIView<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *bt_label;

@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GDMyCommentObj.h"
+
+typedef void(^DeleteBlock)(NSInteger cellTag);
 
 @interface GDMyCommentsCell : UITableViewCell
 
@@ -17,9 +20,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contLabel;
 @property (weak, nonatomic) IBOutlet UIView *pl_view;
-@property (weak, nonatomic) IBOutlet UILabel *pl_label;
 @property (weak, nonatomic) IBOutlet UILabel *pltime_label;
 @property (weak, nonatomic) IBOutlet UILabel *plcont_label;
+@property (copy, nonatomic) DeleteBlock  deleteBlock;
+
+@property (nonatomic, assign) CGFloat heights;
 
 
+-(void)initWithMyCommentObj:(GDMyCommentObj *)obj;
 @end

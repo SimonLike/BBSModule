@@ -1,29 +1,31 @@
+
 //
-//  GDDeleteArticleRequest.m
+//  GDQuickReplyArticleRequest.m
 //  BBSModule
 //
-//  Created by Simon on 2017/7/7.
+//  Created by Simon on 2017/7/13.
 //  Copyright © 2017年 Simon. All rights reserved.
 //
 
-#import "GDDeleteArticleRequest.h"
+#import "GDQuickReplyArticleRequest.h"
 
-@implementation GDDeleteArticleRequest
-- (instancetype) initWithArticleId:(NSInteger)articleId
+@implementation GDQuickReplyArticleRequest
+- (instancetype) initWithArticleId:(NSInteger)articleId content:(NSString *)content
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
         [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
         [requestDict setObject:@(articleId) forKey:@"articleId"];
+        [requestDict setObject:content forKey:@"content"];
         
         [super initWithArgumentDictionary:requestDict];
     }
     return self;
 }
-//删除帖子
+// 首页快速回复
 -(NSString *)jkurl{
-    return @"/appservice/articleController/deleteArticle";
+    return @"/appservice/articleController/quickReplyArticle";
 }
 
 #pragma mark - 基本设置

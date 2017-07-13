@@ -9,8 +9,7 @@
 #import "CCBaseRequest.h"
 
 @interface GDArticleDetailRequest : CCBaseRequest
-- (instancetype) initWithUserId:(NSInteger)userId
-                      ArticleId:(NSInteger)articleId
+- (instancetype) initWithArticleId:(NSInteger)articleId
                            Rows:(NSInteger)rows
                            Page:(NSInteger)page;
 @end

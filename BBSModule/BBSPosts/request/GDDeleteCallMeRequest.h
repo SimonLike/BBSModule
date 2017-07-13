@@ -9,5 +9,4 @@
 #import "CCBaseRequest.h"
 
 @interface GDDeleteCallMeRequest : CCBaseRequest
-- (instancetype) initWithUserId:(NSInteger)userId;
 @end

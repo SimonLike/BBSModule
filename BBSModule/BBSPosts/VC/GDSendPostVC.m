@@ -95,7 +95,7 @@
     [self addViewBlock];
     
     if ([_vcType isEqualToString:@"editPost"]) {
-        GDGetEditArticleRequest *request = [[GDGetEditArticleRequest alloc] initWithUserId:1 articleId:_articleId];
+        GDGetEditArticleRequest *request = [[GDGetEditArticleRequest alloc] initWithArticleId:_articleId];
         [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
             if (responseObject) {
                 NSDictionary *dict = responseObject[@"data"];
@@ -243,7 +243,7 @@
                 }
                 ws.textAlertView.hidden = NO;
                 [ws.textAlertView.textView becomeFirstResponder];
-                ws.textAlertView.block = ^(NSInteger tag) {
+                ws.textAlertView.block = ^(NSInteger tag,NSString *text) {
                     if (tag == 10) {//取消
                         
                     }else{//确定

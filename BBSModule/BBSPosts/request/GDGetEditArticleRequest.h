@@ -9,5 +9,5 @@
 #import "CCBaseRequest.h"
 
 @interface GDGetEditArticleRequest : CCBaseRequest
-- (instancetype) initWithUserId:(NSInteger)userId articleId:(NSInteger)articleId;
+- (instancetype) initWithArticleId:(NSInteger)articleId;
 @end

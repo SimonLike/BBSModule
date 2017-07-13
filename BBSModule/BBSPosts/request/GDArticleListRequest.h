@@ -9,7 +9,6 @@
 #import "CCBaseRequest.h"
 
 @interface GDArticleListRequest : CCBaseRequest
-- (instancetype) initWithUserId:(NSInteger)userId
-                           Rows:(NSInteger)rows
+- (instancetype) initWithRows:(NSInteger)rows
                            Page:(NSInteger)page;
 @end

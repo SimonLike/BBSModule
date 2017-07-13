@@ -9,5 +9,5 @@
 #import "CCBaseRequest.h"
 
 @interface GDDeleteArticleRequest : CCBaseRequest
-- (instancetype) initWithUserId:(NSInteger)userId ArticleId:(NSInteger)articleId;
+- (instancetype) initWithArticleId:(NSInteger)articleId;
 @end

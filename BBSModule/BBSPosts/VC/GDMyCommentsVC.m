@@ -9,9 +9,14 @@
 
 #import "GDMyCommentsVC.h"
 #import "GDMyCommentsCell.h"
+#import "GDMyCommentRequest.h"
+#import "GDDeleteMyCommentRequest.h"
+#import "GDMyCommentObj.h"
 
 @interface GDMyCommentsVC ()
 @property (weak, nonatomic) IBOutlet UITableView *commentTable;
+@property (strong, nonatomic) NSMutableArray *commetArray;
+@property (assign, nonatomic) NSInteger page;
 
 @end
 
@@ -20,7 +25,50 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    [GDUtils setupRefresh:_commentTable WithDelegate:self HeaderSelector:@selector(headerRefresh) FooterSelector:@selector(footerRefresh)];
+    [_commentTable.mj_header beginRefreshing];
 }
+
+
+#pragma mark - MJRefresh Delegate
+//上拉刷新
+-(void)headerRefresh{
+    _page = 1;
+    [self.commetArray removeAllObjects];
+    [self getMyComment];
+    
+}
+//下拉加载更多
+-(void)footerRefresh{
+    _page = _page + 1;
+    [self getMyComment];
+}
+#pragma mark - request
+-(void)getMyComment{
+    GDMyCommentRequest *request = [[GDMyCommentRequest alloc] initWithPage:_page Rows:10];
+    [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
+        if (responseObject) {
+            [self.commetArray addObjectsFromArray:[GDMyCommentObj objectArrayWithKeyValuesArray:responseObject[@"data"][@"myCommentList"]]];
+            [_commentTable reloadData];
+        }
+        [_commentTable.mj_header endRefreshing];
+        [_commentTable.mj_footer endRefreshing];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [_commentTable.mj_header endRefreshing];
+        [_commentTable.mj_footer endRefreshing];
+    }];
+}
+-(void)deleteMyCommentTid:(NSInteger)tid{
+   GDDeleteMyCommentRequest *request = [[GDDeleteMyCommentRequest alloc] initWithTid:tid];
+    [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
+        if (responseObject) {
+            [self getMyComment];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+
 #pragma mark --UITableView delegate datasoure
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -30,12 +78,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return self.commetArray.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 245;
+    GDMyCommentsCell *cell = (GDMyCommentsCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
+    return cell.heights;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -47,12 +96,24 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
+    [cell initWithMyCommentObj:self.commetArray[indexPath.row]];
     
-    
+    __weak typeof(self)ws = self;
+    cell.deleteBlock = ^(NSInteger cellTag) {
+        GDMyCommentObj *obj = ws.commetArray[cellTag];
+        [ws deleteMyCommentTid:obj.topic_id];
+    };
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
 
+}
+
+-(NSMutableArray *)commetArray{
+    if (!_commetArray) {
+        _commetArray = [NSMutableArray array];
+    }
+    return _commetArray;
 }
 /*
 #pragma mark - Navigation

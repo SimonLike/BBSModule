@@ -33,5 +33,7 @@
 #import "NSMutableDictionary+Extend.h"
 #import "UIDevice+DeviceModel.h"
 
+#import "GDUserObj.h"
+#import "AttributeUILabel.h"
 
 #endif

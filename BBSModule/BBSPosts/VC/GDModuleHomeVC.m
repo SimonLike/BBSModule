@@ -20,7 +20,7 @@
 #import "GDReplyDetailsVC.h"
 #import "GDDeleteArticleRequest.h"
 #import "GDTextAlertView.h"
-
+#import "GDQuickReplyArticleRequest.h"
 
 @interface GDModuleHomeVC (){
     
@@ -67,7 +67,7 @@
 }
 
 -(void)getArticleList{
-    GDArticleListRequest *request = [[GDArticleListRequest alloc] initWithUserId:1 Rows:10 Page:_page];
+    GDArticleListRequest *request = [[GDArticleListRequest alloc] initWithRows:10 Page:_page];
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         DLog(@"responseObject--->%@",responseObject);
         if (responseObject) {
@@ -82,7 +82,20 @@
         [_moduleTable.mj_footer endRefreshing];
     }];
 }
-
+-(void)quickReplyArticle:(NSString *)text ArticleId:(NSInteger)articleId{
+    GDQuickReplyArticleRequest *request = [[GDQuickReplyArticleRequest alloc] initWithArticleId:articleId content:text];
+    [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
+        if (responseObject) {
+            //请空回复输入框 赋默认值
+            _textAlertView.textView.text = @"请输入文字";
+            
+            [self getArticleList];//刷新首页状态
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+//右边按钮点击事件
 -(void)showRoomContact{
     if (_ritView == nil) {
         _ritView = [GDRitView initRitView];
@@ -176,9 +189,10 @@
             }
             ws.textAlertView.hidden = NO;
             
-            ws.textAlertView.block = ^(NSInteger tag) {
+            ws.textAlertView.block = ^(NSInteger tag,NSString *text) {
                 if (tag == 11) {//确定
-                    
+                    DLog(@"text--->%@",text);
+                    [self quickReplyArticle:text ArticleId:obj.id];
                 }
                 ws.textAlertView.hidden = YES;
 
@@ -194,7 +208,7 @@
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确定删除该帖子？" preferredStyle: UIAlertControllerStyleAlert];
             UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
                 
-                GDDeleteArticleRequest *request = [[GDDeleteArticleRequest alloc] initWithUserId:1 ArticleId:obj.id];
+                GDDeleteArticleRequest *request = [[GDDeleteArticleRequest alloc] initWithArticleId:obj.id];
                 [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
                     if(responseObject){
                         DLog(@"responseObject-->%@",responseObject);

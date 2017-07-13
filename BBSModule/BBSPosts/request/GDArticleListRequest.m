@@ -10,15 +10,14 @@
 #import "GDArticleListRequest.h"
 
 @implementation GDArticleListRequest
-- (instancetype) initWithUserId:(NSInteger)userId
-                           Rows:(NSInteger)rows
+- (instancetype) initWithRows:(NSInteger)rows
                            Page:(NSInteger)page
 
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
-        [requestDict setObject:@(userId) forKey:@"userId"];
+        [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
         [requestDict setObject:@(rows) forKey:@"rows"];
         [requestDict setObject:@(page) forKey:@"page"];
    

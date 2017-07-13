@@ -32,7 +32,7 @@
     CGFloat selfW = [UIScreen mainScreen].bounds.size.width - 46;
     CGSize labelsize = [GDUtils textHeightSize:self.cont2Label.text maxSize:CGSizeMake(selfW, 100) textFont:[UIFont systemFontOfSize:12]];
 #pragma mark ---id
-    if(obj.id == 1){
+    if(obj.id == [GDUtils readUser].userId){
         self.edit_btn.hidden = NO;
         self.del_btn.hidden = NO;
     }else{

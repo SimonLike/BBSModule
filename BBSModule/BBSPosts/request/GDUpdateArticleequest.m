@@ -9,8 +9,7 @@
 #import "GDUpdateArticleequest.h"
 
 @implementation GDUpdateArticleequest
-- (instancetype) initWithUserId:(NSInteger)userId
-                      ArticleId:(NSInteger)articleId
+- (instancetype) initWithArticleId:(NSInteger)articleId
                           Title:(NSString *)title
                         Content:(NSString *)content
                           Image:(NSString *)image
@@ -20,7 +19,7 @@
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
-        [requestDict setObject:@(userId) forKey:@"userId"];
+        [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
         [requestDict setObject:@(articleId) forKey:@"articleId"];
         [requestDict setObject:title forKey:@"title"];
         [requestDict setObject:content forKey:@"content"];

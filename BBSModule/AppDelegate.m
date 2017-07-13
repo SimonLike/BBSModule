@@ -19,6 +19,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
+    //初始化设置测试用户信息
+    GDUserObj *userObj = [[GDUserObj alloc] init];
+    userObj.userId = 1;
+    userObj.token = @"test";
+    [GDUtils archiveUser:userObj];
     
     GDModuleHomeVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDModuleHome"];
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:vc];

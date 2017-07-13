@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F40935D01F177BEA00974AE8 /* GDQuickReplyArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935CF1F177BEA00974AE8 /* GDQuickReplyArticleRequest.m */; };
+		F40935D31F177C4500974AE8 /* GDReplyCommentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935D21F177C4500974AE8 /* GDReplyCommentRequest.m */; };
+		F40935D61F177FC300974AE8 /* GDUserObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935D51F177FC300974AE8 /* GDUserObj.m */; };
+		F40935D91F17886000974AE8 /* GDMyCommentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935D81F17886000974AE8 /* GDMyCommentRequest.m */; };
+		F40935DC1F178EE500974AE8 /* GDDeleteMyCommentRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935DB1F178EE500974AE8 /* GDDeleteMyCommentRequest.m */; };
+		F40935DF1F17914C00974AE8 /* GDMyCommentObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935DE1F17914C00974AE8 /* GDMyCommentObj.m */; };
+		F40935E21F179DB700974AE8 /* GDReplyMeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935E11F179DB700974AE8 /* GDReplyMeRequest.m */; };
+		F40935E51F179E2800974AE8 /* GDReplyMeObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935E41F179E2800974AE8 /* GDReplyMeObj.m */; };
+		F40935E81F179E9A00974AE8 /* GDDeleteReplyMeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935E71F179E9A00974AE8 /* GDDeleteReplyMeRequest.m */; };
+		F40935EB1F17A1FF00974AE8 /* AttributeUILabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F40935EA1F17A1FF00974AE8 /* AttributeUILabel.m */; };
 		F40D6D3B1F0405BE003E58F6 /* GD_MyselfVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F40D6D3A1F0405BE003E58F6 /* GD_MyselfVC.m */; };
 		F40D6D431F053D4F003E58F6 /* GDTextAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40D6D421F053D4F003E58F6 /* GDTextAlertView.m */; };
 		F40D6D451F053D5C003E58F6 /* GDTextAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F40D6D441F053D5C003E58F6 /* GDTextAlertView.xib */; };
@@ -164,6 +174,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F40935CE1F177BEA00974AE8 /* GDQuickReplyArticleRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDQuickReplyArticleRequest.h; sourceTree = "<group>"; };
+		F40935CF1F177BEA00974AE8 /* GDQuickReplyArticleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDQuickReplyArticleRequest.m; sourceTree = "<group>"; };
+		F40935D11F177C4500974AE8 /* GDReplyCommentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDReplyCommentRequest.h; sourceTree = "<group>"; };
+		F40935D21F177C4500974AE8 /* GDReplyCommentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyCommentRequest.m; sourceTree = "<group>"; };
+		F40935D41F177FC300974AE8 /* GDUserObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDUserObj.h; sourceTree = "<group>"; };
+		F40935D51F177FC300974AE8 /* GDUserObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDUserObj.m; sourceTree = "<group>"; };
+		F40935D71F17886000974AE8 /* GDMyCommentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDMyCommentRequest.h; sourceTree = "<group>"; };
+		F40935D81F17886000974AE8 /* GDMyCommentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDMyCommentRequest.m; sourceTree = "<group>"; };
+		F40935DA1F178EE500974AE8 /* GDDeleteMyCommentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDeleteMyCommentRequest.h; sourceTree = "<group>"; };
+		F40935DB1F178EE500974AE8 /* GDDeleteMyCommentRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDeleteMyCommentRequest.m; sourceTree = "<group>"; };
+		F40935DD1F17914C00974AE8 /* GDMyCommentObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDMyCommentObj.h; sourceTree = "<group>"; };
+		F40935DE1F17914C00974AE8 /* GDMyCommentObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDMyCommentObj.m; sourceTree = "<group>"; };
+		F40935E01F179DB700974AE8 /* GDReplyMeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDReplyMeRequest.h; sourceTree = "<group>"; };
+		F40935E11F179DB700974AE8 /* GDReplyMeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyMeRequest.m; sourceTree = "<group>"; };
+		F40935E31F179E2800974AE8 /* GDReplyMeObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDReplyMeObj.h; sourceTree = "<group>"; };
+		F40935E41F179E2800974AE8 /* GDReplyMeObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyMeObj.m; sourceTree = "<group>"; };
+		F40935E61F179E9A00974AE8 /* GDDeleteReplyMeRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDeleteReplyMeRequest.h; sourceTree = "<group>"; };
+		F40935E71F179E9A00974AE8 /* GDDeleteReplyMeRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDeleteReplyMeRequest.m; sourceTree = "<group>"; };
+		F40935E91F17A1FF00974AE8 /* AttributeUILabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributeUILabel.h; sourceTree = "<group>"; };
+		F40935EA1F17A1FF00974AE8 /* AttributeUILabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributeUILabel.m; sourceTree = "<group>"; };
 		F40D6D391F0405BE003E58F6 /* GD_MyselfVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GD_MyselfVC.h; sourceTree = "<group>"; };
 		F40D6D3A1F0405BE003E58F6 /* GD_MyselfVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GD_MyselfVC.m; sourceTree = "<group>"; };
 		F40D6D411F053D4F003E58F6 /* GDTextAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDTextAlertView.h; sourceTree = "<group>"; };
@@ -495,6 +525,18 @@
 				F40D6D5B1F121DBF003E58F6 /* GDMyArticleListRequest.m */,
 				F46FA07C1F13990A001E900A /* GDGetEditArticleRequest.h */,
 				F46FA07D1F13990A001E900A /* GDGetEditArticleRequest.m */,
+				F40935CE1F177BEA00974AE8 /* GDQuickReplyArticleRequest.h */,
+				F40935CF1F177BEA00974AE8 /* GDQuickReplyArticleRequest.m */,
+				F40935D11F177C4500974AE8 /* GDReplyCommentRequest.h */,
+				F40935D21F177C4500974AE8 /* GDReplyCommentRequest.m */,
+				F40935D71F17886000974AE8 /* GDMyCommentRequest.h */,
+				F40935D81F17886000974AE8 /* GDMyCommentRequest.m */,
+				F40935DA1F178EE500974AE8 /* GDDeleteMyCommentRequest.h */,
+				F40935DB1F178EE500974AE8 /* GDDeleteMyCommentRequest.m */,
+				F40935E01F179DB700974AE8 /* GDReplyMeRequest.h */,
+				F40935E11F179DB700974AE8 /* GDReplyMeRequest.m */,
+				F40935E61F179E9A00974AE8 /* GDDeleteReplyMeRequest.h */,
+				F40935E71F179E9A00974AE8 /* GDDeleteReplyMeRequest.m */,
 			);
 			path = request;
 			sourceTree = "<group>";
@@ -525,10 +567,14 @@
 				F42913541F0E43AC0000D09A /* GDArticleListObj.m */,
 				F44C9DC91F0F82EA0015106E /* GDCommentListObj.h */,
 				F44C9DCA1F0F82EA0015106E /* GDCommentListObj.m */,
+				F40935DD1F17914C00974AE8 /* GDMyCommentObj.h */,
+				F40935DE1F17914C00974AE8 /* GDMyCommentObj.m */,
 				F40D6D541F1212F1003E58F6 /* GDCallMeObj.h */,
 				F40D6D551F1212F1003E58F6 /* GDCallMeObj.m */,
 				F40D6D5D1F121EDA003E58F6 /* GDMyArticleListObj.h */,
 				F40D6D5E1F121EDA003E58F6 /* GDMyArticleListObj.m */,
+				F40935E31F179E2800974AE8 /* GDReplyMeObj.h */,
+				F40935E41F179E2800974AE8 /* GDReplyMeObj.m */,
 			);
 			path = Obj;
 			sourceTree = "<group>";
@@ -607,6 +653,10 @@
 				F42913A81F0E4CFA0000D09A /* GDCommon.h */,
 				F42913AA1F0E4E900000D09A /* GDUtils.h */,
 				F42913AB1F0E4E900000D09A /* GDUtils.m */,
+				F40935D41F177FC300974AE8 /* GDUserObj.h */,
+				F40935D51F177FC300974AE8 /* GDUserObj.m */,
+				F40935E91F17A1FF00974AE8 /* AttributeUILabel.h */,
+				F40935EA1F17A1FF00974AE8 /* AttributeUILabel.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1119,6 +1169,7 @@
 				F42913EB1F0E4EE70000D09A /* UIScrollView+MJRefresh.m in Sources */,
 				F4D887751F066065006CE493 /* SGAssetModel.m in Sources */,
 				F40D6D531F121076003E58F6 /* GDCallMeRequest.m in Sources */,
+				F40935D61F177FC300974AE8 /* GDUserObj.m in Sources */,
 				F415763B1F0CB3E60054BD36 /* NSString+Extend.m in Sources */,
 				F4D887A31F0664E7006CE493 /* GDPersonalCenterVC.m in Sources */,
 				F42913E51F0E4EE70000D09A /* MJRefreshGifHeader.m in Sources */,
@@ -1143,6 +1194,7 @@
 				F44C9DCB1F0F82EA0015106E /* GDCommentListObj.m in Sources */,
 				F4D887781F066065006CE493 /* SGGroupCell.m in Sources */,
 				F4D887B61F06707B006CE493 /* GDClearCacheVC.m in Sources */,
+				F40935E81F179E9A00974AE8 /* GDDeleteReplyMeRequest.m in Sources */,
 				F42913DF1F0E4EE70000D09A /* MJRefreshAutoGifFooter.m in Sources */,
 				F42913A31F0E4BEE0000D09A /* UIImageView+WebCache.m in Sources */,
 				F4D887811F066073006CE493 /* SVProgressHUD.m in Sources */,
@@ -1154,6 +1206,7 @@
 				F42913991F0E4BEE0000D09A /* SDWebImageCompat.m in Sources */,
 				F46D88601F0A4CAD00B68E28 /* GDPostDetailsVC.m in Sources */,
 				F4ECBA411F012292001F3FC9 /* ViewController.m in Sources */,
+				F40935E51F179E2800974AE8 /* GDReplyMeObj.m in Sources */,
 				F42913711F0E4A5A0000D09A /* MJIvar.m in Sources */,
 				F40D6D5F1F121EDA003E58F6 /* GDMyArticleListObj.m in Sources */,
 				F41576281F0CB36A0054BD36 /* CCBaseRequest.m in Sources */,
@@ -1161,6 +1214,7 @@
 				F4D887AA1F066538006CE493 /* GDPersonalCenterCell.m in Sources */,
 				F4D887771F066065006CE493 /* SGCollectionController.m in Sources */,
 				F42913DC1F0E4EE70000D09A /* MJRefreshComponent.m in Sources */,
+				F40935DF1F17914C00974AE8 /* GDMyCommentObj.m in Sources */,
 				F40D6D4F1F06AA0A003E58F6 /* GDChooseFriendCell.m in Sources */,
 				F42913701F0E4A5A0000D09A /* MJFoundation.m in Sources */,
 				F42913DB1F0E4EE70000D09A /* MJRefreshBackFooter.m in Sources */,
@@ -1172,6 +1226,8 @@
 				F40D6D561F1212F1003E58F6 /* GDCallMeObj.m in Sources */,
 				F45FAA4F1F05158500638211 /* GDRitView.m in Sources */,
 				F4D887B21F066899006CE493 /* GDMyPostsCell.m in Sources */,
+				F40935DC1F178EE500974AE8 /* GDDeleteMyCommentRequest.m in Sources */,
+				F40935E21F179DB700974AE8 /* GDReplyMeRequest.m in Sources */,
 				F42913741F0E4A5A0000D09A /* MJType.m in Sources */,
 				F42913A91F0E4CFA0000D09A /* BaseViewController.m in Sources */,
 				F42913F51F0E529E0000D09A /* WCLRecordEngine.m in Sources */,
@@ -1182,6 +1238,7 @@
 				F415763A1F0CB3E60054BD36 /* NSMutableDictionary+Extend.m in Sources */,
 				F42913E91F0E4EE70000D09A /* MJRefreshConst.m in Sources */,
 				F4D887B91F06708C006CE493 /* GDClearCacheCell.m in Sources */,
+				F40935D01F177BEA00974AE8 /* GDQuickReplyArticleRequest.m in Sources */,
 				F429139D1F0E4BEE0000D09A /* SDWebImageManager.m in Sources */,
 				F41576271F0CB36A0054BD36 /* CCSessionManager.m in Sources */,
 				F429139C1F0E4BEE0000D09A /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1214,6 +1271,8 @@
 				F45A6E901F0650B900808731 /* GDSendPostVC.m in Sources */,
 				F42913E01F0E4EE70000D09A /* MJRefreshAutoNormalFooter.m in Sources */,
 				F429139F1F0E4BEE0000D09A /* UIButton+WebCache.m in Sources */,
+				F40935D31F177C4500974AE8 /* GDReplyCommentRequest.m in Sources */,
+				F40935D91F17886000974AE8 /* GDMyCommentRequest.m in Sources */,
 				F42913551F0E43AC0000D09A /* GDArticleListObj.m in Sources */,
 				F45FAA591F051BC800638211 /* GDReplyToMyVC.m in Sources */,
 				F42913981F0E4BEE0000D09A /* SDImageCache.m in Sources */,
@@ -1221,6 +1280,7 @@
 				F42913DE1F0E4EE70000D09A /* MJRefreshHeader.m in Sources */,
 				F415763D1F0CB3E60054BD36 /* UIImage+Extend.m in Sources */,
 				F42913AC1F0E4E900000D09A /* GDUtils.m in Sources */,
+				F40935EB1F17A1FF00974AE8 /* AttributeUILabel.m in Sources */,
 				F40D6D481F06A963003E58F6 /* GDChooseFriendVC.m in Sources */,
 				F40D6D431F053D4F003E58F6 /* GDTextAlertView.m in Sources */,
 				F46FA07E1F13990A001E900A /* GDGetEditArticleRequest.m in Sources */,

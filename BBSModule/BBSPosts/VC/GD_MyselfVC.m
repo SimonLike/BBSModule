@@ -39,7 +39,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
   
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        GDDeleteCallMeRequest *request = [[GDDeleteCallMeRequest alloc] initWithUserId:1];
+        GDDeleteCallMeRequest *request = [[GDDeleteCallMeRequest alloc] init];
         [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
             if (responseObject) {
                 DLog(@"responseObject->%@",responseObject);
@@ -70,11 +70,10 @@
 }
 -(void)getCallMeRequest{
 
-    GDCallMeRequest *request = [[GDCallMeRequest alloc] initWithUserId:1 rows:10 page:1];
+    GDCallMeRequest *request = [[GDCallMeRequest alloc] initWithRows:10 page:_page];
     
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         DLog(@"responseObject--->%@",responseObject);
-
         if (responseObject) {
             
             [self.callArray addObjectsFromArray:[GDCallMeObj objectArrayWithKeyValuesArray:responseObject[@"data"][@"callMeList"]]];

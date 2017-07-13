@@ -1,29 +1,29 @@
+
 //
-//  GDDeleteArticleRequest.m
+//  GDDeleteReplyMeRequest.m
 //  BBSModule
 //
-//  Created by Simon on 2017/7/7.
+//  Created by Simon on 2017/7/13.
 //  Copyright © 2017年 Simon. All rights reserved.
 //
 
-#import "GDDeleteArticleRequest.h"
+#import "GDDeleteReplyMeRequest.h"
 
-@implementation GDDeleteArticleRequest
-- (instancetype) initWithArticleId:(NSInteger)articleId
+@implementation GDDeleteReplyMeRequest
+- (instancetype) init
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
         [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
-        [requestDict setObject:@(articleId) forKey:@"articleId"];
         
         [super initWithArgumentDictionary:requestDict];
     }
     return self;
 }
-//删除帖子
+// 清空回复我的列表
 -(NSString *)jkurl{
-    return @"/appservice/articleController/deleteArticle";
+    return @"/appservice/personalCenterController/deleteReplyMe";
 }
 
 #pragma mark - 基本设置

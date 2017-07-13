@@ -11,13 +11,13 @@
 #import "GDDeleteCallMeRequest.h"
 
 @implementation GDDeleteCallMeRequest
-- (instancetype) initWithUserId:(NSInteger)userId
+- (instancetype) init
 
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
-        [requestDict setObject:@(userId) forKey:@"userId"];
+        [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
         
         [super initWithArgumentDictionary:requestDict];
     }

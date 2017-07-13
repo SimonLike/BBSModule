@@ -48,7 +48,7 @@
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
    
-    GDArticleDetailRequest *request = [[GDArticleDetailRequest alloc] initWithUserId:1 ArticleId:_articleId Rows:30 Page:1];
+    GDArticleDetailRequest *request = [[GDArticleDetailRequest alloc] initWithArticleId:_articleId Rows:30 Page:1];
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         DLog(@"responseObject->%@",responseObject);
         if (responseObject) {

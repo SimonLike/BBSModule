@@ -58,7 +58,7 @@
     [self.navBtnRight setImage:[UIImage imageNamed:@"navshow"] forState:UIControlStateNormal];
     [self.navBtnRight addTarget: self action: @selector(rightAction) forControlEvents: UIControlEventTouchUpInside];
     self.navBtnRight.titleLabel.font = [UIFont systemFontOfSize:15];
-    [self.navBtnRight setTitleColor:RGBCOLOR16(0x333333) forState:UIControlStateNormal];
+    [self.navBtnRight setTitleColor:RGBCOLOR16(0xffffff) forState:UIControlStateNormal];
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:self.navBtnRight];
     self.navigationItem.rightBarButtonItem = rightItem;

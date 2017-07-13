@@ -10,12 +10,12 @@
 #import "GDGetEditArticleRequest.h"
 
 @implementation GDGetEditArticleRequest
-- (instancetype) initWithUserId:(NSInteger)userId articleId:(NSInteger)articleId
+- (instancetype) initWithArticleId:(NSInteger)articleId
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
-        [requestDict setObject:@(userId) forKey:@"userId"];
+        [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
         [requestDict setObject:@(articleId) forKey:@"articleId"];
         
         [super initWithArgumentDictionary:requestDict];

@@ -11,14 +11,13 @@
 #import "GDMyArticleListRequest.h"
 
 @implementation GDMyArticleListRequest
-- (instancetype) initWithUserId:(NSInteger)userId
-                           rows:(NSInteger)rows
+- (instancetype) initWithRows:(NSInteger)rows
                            page:(NSInteger)page
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
-        [requestDict setObject:@(userId) forKey:@"userId"];
+        [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
         [requestDict setObject:@(rows) forKey:@"rows"];
         [requestDict setObject:@(page) forKey:@"page"];
         

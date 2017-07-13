@@ -48,7 +48,7 @@
     [self getMyArticleList];
 }
 -(void)getMyArticleList{
-    GDMyArticleListRequest *request = [[GDMyArticleListRequest alloc] initWithUserId:1 rows:10 page:1];
+    GDMyArticleListRequest *request = [[GDMyArticleListRequest alloc] initWithRows:10 page:_page];
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         DLog(@"responseObject-->%@",responseObject);
         if (responseObject) {

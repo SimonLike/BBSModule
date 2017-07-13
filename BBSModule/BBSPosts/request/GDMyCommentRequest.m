@@ -1,29 +1,32 @@
+
 //
-//  GDDeleteArticleRequest.m
+//  GDMyCommentRequest.m
 //  BBSModule
 //
-//  Created by Simon on 2017/7/7.
+//  Created by Simon on 2017/7/13.
 //  Copyright © 2017年 Simon. All rights reserved.
 //
 
-#import "GDDeleteArticleRequest.h"
+#import "GDMyCommentRequest.h"
 
-@implementation GDDeleteArticleRequest
-- (instancetype) initWithArticleId:(NSInteger)articleId
+@implementation GDMyCommentRequest
+- (instancetype) initWithPage:(NSInteger)page
+                         Rows:(NSInteger)rows
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
         [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
-        [requestDict setObject:@(articleId) forKey:@"articleId"];
+        [requestDict setObject:@(page) forKey:@"articleId"];
+        [requestDict setObject:@(rows) forKey:@"commentId"];
         
         [super initWithArgumentDictionary:requestDict];
     }
     return self;
 }
-//删除帖子
+// 获取我的评论（评论+回复）
 -(NSString *)jkurl{
-    return @"/appservice/articleController/deleteArticle";
+    return @"/appservice/personalCenterController/getMyComment";
 }
 
 #pragma mark - 基本设置

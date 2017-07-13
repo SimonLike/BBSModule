@@ -8,8 +8,30 @@
 //
 
 #import "GDUtils.h"
-
 @implementation GDUtils
+
+
+//存储、读取个人数据
++ (GDUserObj *)readUser{
+    NSData *oldData = [[NSUserDefaults standardUserDefaults] objectForKey:USERINFO];
+    if (!oldData) {
+        return nil;
+    }
+    NSKeyedUnarchiver *myKeyedUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:oldData];
+    GDUserObj *obj = [myKeyedUnarchiver decodeObject];
+    [myKeyedUnarchiver finishDecoding];
+    return obj;
+}
+
++ (void)archiveUser:(GDUserObj *)obj{
+    
+    NSMutableData *newData = [[NSMutableData alloc] init];
+    NSKeyedArchiver *newKeyedArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:newData];
+    [newKeyedArchiver encodeObject:obj];
+    [newKeyedArchiver finishEncoding];
+    [[NSUserDefaults standardUserDefaults] setObject:newData forKey:USERINFO];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 
 
 + (void)setupRefresh:(UIScrollView*)scrollView WithDelegate:(id)delegate HeaderSelector:(SEL)headSelector FooterSelector:(SEL)footSelector
