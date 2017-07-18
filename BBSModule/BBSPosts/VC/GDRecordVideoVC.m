@@ -108,36 +108,34 @@
 #pragma mark - Apple相册选择代理
 //选择了某个照片的回调函数/代理回调
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:(NSString*)kUTTypeMovie]) {
+        
+        NSURL *sourceURL = [info objectForKey:UIImagePickerControllerMediaURL];
+
+        [picker dismissViewControllerAnimated:YES completion:^{
+            if (self.recordBlock) {
+                self.recordBlock(sourceURL);
+            }
+        }];
+
+        
         //获取视频的名称
-        NSString * videoPath=[NSString stringWithFormat:@"%@",[info objectForKey:UIImagePickerControllerMediaURL]];
-        NSRange range =[videoPath rangeOfString:@"trim."];//匹配得到的下标
-        NSString *content=[videoPath substringFromIndex:range.location+5];
-        //视频的后缀
-        NSRange rangeSuffix=[content rangeOfString:@"."];
-        NSString * suffixName=[content substringFromIndex:rangeSuffix.location+1];
-        //如果视频是mov格式的则转为MP4的
-        if ([suffixName isEqualToString:@"MOV"]) {
-            NSURL *videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
-            __weak typeof(self) weakSelf = self;
-            [self.recordEngine changeMovToMp4:videoUrl dataBlock:^(UIImage *movieImage) {
-                
-                [weakSelf.moviePicker dismissViewControllerAnimated:YES completion:^{
-                    if (weakSelf.recordBlock) {
-                        weakSelf.recordBlock(weakSelf.recordEngine.videoPath);
-                    }
-                    
-//                    weakSelf.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:weakSelf.recordEngine.videoPath]];
-//                    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[weakSelf.playerVC moviePlayer]];
-//                    [[weakSelf.playerVC moviePlayer] prepareToPlay];
-//                    
-//                    [weakSelf presentMoviePlayerViewControllerAnimated:weakSelf.playerVC];
-//                    [[weakSelf.playerVC moviePlayer] play];
-                    
-                    
-                }];
-            }];
-        }
+//        NSString * videoPath=[NSString stringWithFormat:@"%@",[info objectForKey:UIImagePickerControllerMediaURL]];
+//        NSRange range =[videoPath rangeOfString:@"trim."];//匹配得到的下标
+//        NSString *content=[videoPath substringFromIndex:range.location+5];
+//        //视频的后缀
+//        NSRange rangeSuffix=[content rangeOfString:@"."];
+//        NSString * suffixName=[content substringFromIndex:rangeSuffix.location+1];
+//        //如果视频是mov格式的则转为MP4的
+//        if ([suffixName isEqualToString:@"MOV"]) {
+//            NSURL *videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+//            __weak typeof(self) weakSelf = self;
+//            [self.recordEngine changeMovToMp4:videoUrl dataBlock:^(UIImage *movieImage) {
+//                
+//               
+//            }];
+//        }
     }
 }
 #pragma mark - WCLRecordEngineDelegate
@@ -187,12 +185,10 @@
         __weak typeof(self) weakSelf = self;
         [self.recordEngine stopCaptureHandler:^(UIImage *movieImage) {
             
+            NSURL* url = [NSURL fileURLWithPath:weakSelf.recordEngine.videoPath];
             if (weakSelf.recordBlock) {
-                weakSelf.recordBlock(weakSelf.recordEngine.videoPath);
+                weakSelf.recordBlock(url);
             }
-            
-            DLog(@"weakSelf.recordEngine.videoPath-->%@",weakSelf.recordEngine.videoPath);
-
         }];
     }else {
         NSLog(@"请先录制视频~");

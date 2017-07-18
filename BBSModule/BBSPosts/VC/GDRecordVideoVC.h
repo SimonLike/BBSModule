@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-typedef void(^RecordBlock)(NSString *videoPath);
+typedef void(^RecordBlock)(NSURL *url);
 @interface GDRecordVideoVC : BaseViewController
 
 @property (nonatomic, copy)RecordBlock recordBlock;

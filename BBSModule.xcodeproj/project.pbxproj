@@ -94,6 +94,8 @@
 		F42913F51F0E529E0000D09A /* WCLRecordEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = F42913F31F0E529E0000D09A /* WCLRecordEngine.m */; };
 		F42913F81F0E587B0000D09A /* GDRecordVideoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F42913F71F0E587B0000D09A /* GDRecordVideoVC.m */; };
 		F42913FC1F0E5F220000D09A /* WCLRecordProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F42913FB1F0E5F220000D09A /* WCLRecordProgressView.m */; };
+		F42A69EE1F1CE1710021B425 /* XQUploadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F42A69ED1F1CE1710021B425 /* XQUploadHelper.m */; };
+		F42A6A831F1CE6DC0021B425 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F42A6A821F1CE6DC0021B425 /* libz.tbd */; };
 		F44C9DC81F0F712E0015106E /* GDArticleDetailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DC71F0F712E0015106E /* GDArticleDetailRequest.m */; };
 		F44C9DCB1F0F82EA0015106E /* GDCommentListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DCA1F0F82EA0015106E /* GDCommentListObj.m */; };
 		F44C9DCE1F0F9D420015106E /* GDDeleteArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DCD1F0F9D420015106E /* GDDeleteArticleRequest.m */; };
@@ -144,6 +146,7 @@
 		F4D887B91F06708C006CE493 /* GDClearCacheCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D887B81F06708C006CE493 /* GDClearCacheCell.m */; };
 		F4D887BC1F067655006CE493 /* GDPeratingPostView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D887BB1F067655006CE493 /* GDPeratingPostView.m */; };
 		F4D887BE1F067665006CE493 /* GDPeratingPostView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4D887BD1F067665006CE493 /* GDPeratingPostView.xib */; };
+		F4E3FD211F1E2AFE00E32468 /* AFUploadFile.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E3FD201F1E2AFE00E32468 /* AFUploadFile.m */; };
 		F4ECBA3B1F012292001F3FC9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ECBA3A1F012292001F3FC9 /* main.m */; };
 		F4ECBA3E1F012292001F3FC9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ECBA3D1F012292001F3FC9 /* AppDelegate.m */; };
 		F4ECBA411F012292001F3FC9 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4ECBA401F012292001F3FC9 /* ViewController.m */; };
@@ -350,6 +353,9 @@
 		F42913F71F0E587B0000D09A /* GDRecordVideoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDRecordVideoVC.m; sourceTree = "<group>"; };
 		F42913FA1F0E5F220000D09A /* WCLRecordProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WCLRecordProgressView.h; sourceTree = "<group>"; };
 		F42913FB1F0E5F220000D09A /* WCLRecordProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WCLRecordProgressView.m; sourceTree = "<group>"; };
+		F42A69EC1F1CE1710021B425 /* XQUploadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XQUploadHelper.h; sourceTree = "<group>"; };
+		F42A69ED1F1CE1710021B425 /* XQUploadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XQUploadHelper.m; sourceTree = "<group>"; };
+		F42A6A821F1CE6DC0021B425 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F44C9DC61F0F712E0015106E /* GDArticleDetailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDArticleDetailRequest.h; sourceTree = "<group>"; };
 		F44C9DC71F0F712E0015106E /* GDArticleDetailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDArticleDetailRequest.m; sourceTree = "<group>"; };
 		F44C9DC91F0F82EA0015106E /* GDCommentListObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDCommentListObj.h; sourceTree = "<group>"; };
@@ -437,6 +443,8 @@
 		F4D887BA1F067655006CE493 /* GDPeratingPostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDPeratingPostView.h; sourceTree = "<group>"; };
 		F4D887BB1F067655006CE493 /* GDPeratingPostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDPeratingPostView.m; sourceTree = "<group>"; };
 		F4D887BD1F067665006CE493 /* GDPeratingPostView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GDPeratingPostView.xib; sourceTree = "<group>"; };
+		F4E3FD1F1F1E2AFE00E32468 /* AFUploadFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFUploadFile.h; sourceTree = "<group>"; };
+		F4E3FD201F1E2AFE00E32468 /* AFUploadFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFUploadFile.m; sourceTree = "<group>"; };
 		F4ECBA361F012292001F3FC9 /* BBSModule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BBSModule.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4ECBA3A1F012292001F3FC9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F4ECBA3C1F012292001F3FC9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -462,6 +470,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F42A6A831F1CE6DC0021B425 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +666,10 @@
 				F40935D51F177FC300974AE8 /* GDUserObj.m */,
 				F40935E91F17A1FF00974AE8 /* AttributeUILabel.h */,
 				F40935EA1F17A1FF00974AE8 /* AttributeUILabel.m */,
+				F42A69EC1F1CE1710021B425 /* XQUploadHelper.h */,
+				F42A69ED1F1CE1710021B425 /* XQUploadHelper.m */,
+				F4E3FD1F1F1E2AFE00E32468 /* AFUploadFile.h */,
+				F4E3FD201F1E2AFE00E32468 /* AFUploadFile.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -791,6 +804,14 @@
 			path = WCLRecordProgressView;
 			sourceTree = "<group>";
 		};
+		F42A6A811F1CE6DC0021B425 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F42A6A821F1CE6DC0021B425 /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F4D887631F066065006CE493 /* Third */ = {
 			isa = PBXGroup;
 			children = (
@@ -887,6 +908,7 @@
 				F4ECBA551F012292001F3FC9 /* BBSModuleTests */,
 				F4ECBA601F012292001F3FC9 /* BBSModuleUITests */,
 				F4ECBA371F012292001F3FC9 /* Products */,
+				F42A6A811F1CE6DC0021B425 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1176,6 +1198,7 @@
 				F46750DB1F0270E3008F93A6 /* GDModuleHomeVC.m in Sources */,
 				F4D887791F066065006CE493 /* SGImagePickerController.m in Sources */,
 				F41576391F0CB3E60054BD36 /* NSMutableArray+Extend.m in Sources */,
+				F4E3FD211F1E2AFE00E32468 /* AFUploadFile.m in Sources */,
 				F42913A11F0E4BEE0000D09A /* UIImage+MultiFormat.m in Sources */,
 				F4D887761F066065006CE493 /* SGAssetsGroupController.m in Sources */,
 				F42913A41F0E4BEE0000D09A /* UIView+WebCacheOperation.m in Sources */,
@@ -1255,6 +1278,7 @@
 				F45A6E931F0651E100808731 /* HRPicCollectionView.m in Sources */,
 				F42913971F0E4BEE0000D09A /* NSData+ImageContentType.m in Sources */,
 				F42913A01F0E4BEE0000D09A /* UIImage+GIF.m in Sources */,
+				F42A69EE1F1CE1710021B425 /* XQUploadHelper.m in Sources */,
 				F4ECBA471F012292001F3FC9 /* BBSModule.xcdatamodeld in Sources */,
 				F415761E1F0CB3120054BD36 /* AFSecurityPolicy.m in Sources */,
 				F46D88671F0A584F00B68E28 /* GDPostDetailsCell.m in Sources */,

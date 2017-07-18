@@ -6,7 +6,7 @@
 
 #define HTTP_HOME @"http://139.196.41.31:8080/GDLT"
 //上传图片前缀
-#define PIC_UPDATE @"139.196.41.31:8080/GDLT"
+#define PIC_UPDATE @"http://139.196.41.31:8080/GDLT"
 //图片Url前缀
 #define PIC_HOST  @"139.196.41.31:8080/GDLT"
 
@@ -17,6 +17,19 @@
 #endif
 
 #define USERINFO @"USERINFO"
+
+
+typedef NS_ENUM(NSUInteger, ResposeStyle) {
+    JSON,
+    XML,
+    Data,
+};
+
+typedef NS_ENUM(NSUInteger, RequestStyle) {
+    RequestJSON,
+    RequestString,
+    RequestDefault
+};
 
 
 typedef NS_ENUM(NSUInteger, UploadVieoStyle) {

@@ -60,11 +60,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jL9-gt-Cux">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="jL9-gt-Cux">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vhG-dW-UrD">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="604"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="665"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cpQ-Dr-QlX">
                                                 <rect key="frame" x="20" y="20" width="335" height="151"/>
@@ -92,15 +92,24 @@
                                                     <constraint firstAttribute="trailing" secondItem="jIW-ps-qa5" secondAttribute="trailing" constant="10" id="xrW-PP-imQ"/>
                                                 </constraints>
                                             </view>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入标题" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JKa-9j-wrF">
+                                                <rect key="frame" x="20" y="196" width="335" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="eeW-IS-tiV"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmd-QY-M4l">
-                                                <rect key="frame" x="20" y="196" width="164" height="37"/>
+                                                <rect key="frame" x="20" y="257" width="164" height="37"/>
                                                 <state key="normal" backgroundImage="mudule_yuyin2"/>
                                                 <connections>
                                                     <action selector="yuyinClick:" destination="oLX-Hz-ZJl" eventType="touchUpInside" id="HJq-99-pKT"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ISN-sK-5xp">
-                                                <rect key="frame" x="22" y="552" width="331" height="42"/>
+                                                <rect key="frame" x="22" y="613" width="331" height="42"/>
                                                 <color key="backgroundColor" red="0.33333333329999998" green="0.72941176470000002" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="42" id="fLL-Cv-EK7"/>
@@ -110,7 +119,7 @@
                                                 </state>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hY0-Cz-k45">
-                                                <rect key="frame" x="20" y="233" width="335" height="100"/>
+                                                <rect key="frame" x="20" y="294" width="335" height="100"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你还可以上传8张" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T70-bZ-awG">
                                                         <rect key="frame" x="0.0" y="0.0" width="94" height="15"/>
@@ -137,7 +146,7 @@
                                                 </constraints>
                                             </view>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4WN-6D-iJF">
-                                                <rect key="frame" x="20" y="333" width="335" height="189"/>
+                                                <rect key="frame" x="20" y="394" width="335" height="189"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请勿上传色情、反动违法视频" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dlW-4C-EoP">
                                                         <rect key="frame" x="0.0" y="0.0" width="173" height="16"/>
@@ -176,14 +185,17 @@
                                             <constraint firstAttribute="trailing" secondItem="cpQ-Dr-QlX" secondAttribute="trailing" constant="20" id="5Cb-nk-FfZ"/>
                                             <constraint firstItem="hY0-Cz-k45" firstAttribute="top" secondItem="wmd-QY-M4l" secondAttribute="bottom" id="5R0-Vh-UgO"/>
                                             <constraint firstItem="wmd-QY-M4l" firstAttribute="leading" secondItem="vhG-dW-UrD" secondAttribute="leading" constant="20" id="6kW-b6-uYV"/>
+                                            <constraint firstItem="wmd-QY-M4l" firstAttribute="top" secondItem="JKa-9j-wrF" secondAttribute="bottom" constant="25" id="9Bd-tr-j4J"/>
                                             <constraint firstAttribute="bottom" secondItem="ISN-sK-5xp" secondAttribute="bottom" constant="10" id="Ahg-64-LvR"/>
                                             <constraint firstItem="cpQ-Dr-QlX" firstAttribute="top" secondItem="vhG-dW-UrD" secondAttribute="top" constant="20" id="Dyl-Hv-GEH"/>
                                             <constraint firstAttribute="trailing" secondItem="hY0-Cz-k45" secondAttribute="trailing" constant="20" id="PUC-GE-rLS"/>
                                             <constraint firstItem="ISN-sK-5xp" firstAttribute="leading" secondItem="vhG-dW-UrD" secondAttribute="leading" constant="22" id="Pcc-9x-TYo"/>
                                             <constraint firstAttribute="trailing" secondItem="ISN-sK-5xp" secondAttribute="trailing" constant="22" id="R2q-Ca-j0U"/>
-                                            <constraint firstItem="wmd-QY-M4l" firstAttribute="top" secondItem="cpQ-Dr-QlX" secondAttribute="bottom" constant="25" id="TWd-xI-2wO"/>
                                             <constraint firstItem="4WN-6D-iJF" firstAttribute="leading" secondItem="vhG-dW-UrD" secondAttribute="leading" constant="20" id="UTC-d2-3Wx"/>
                                             <constraint firstAttribute="trailing" secondItem="4WN-6D-iJF" secondAttribute="trailing" constant="20" id="Ue2-4N-YKV"/>
+                                            <constraint firstAttribute="trailing" secondItem="JKa-9j-wrF" secondAttribute="trailing" constant="20" id="elR-Mh-c8C"/>
+                                            <constraint firstItem="JKa-9j-wrF" firstAttribute="top" secondItem="cpQ-Dr-QlX" secondAttribute="bottom" constant="25" id="euQ-ug-qoW"/>
+                                            <constraint firstItem="JKa-9j-wrF" firstAttribute="leading" secondItem="vhG-dW-UrD" secondAttribute="leading" constant="20" id="hKB-V0-8sj"/>
                                             <constraint firstItem="cpQ-Dr-QlX" firstAttribute="leading" secondItem="vhG-dW-UrD" secondAttribute="leading" constant="20" id="hbU-Lc-wLd"/>
                                             <constraint firstItem="4WN-6D-iJF" firstAttribute="top" secondItem="hY0-Cz-k45" secondAttribute="bottom" id="xng-Es-D3L"/>
                                             <constraint firstItem="hY0-Cz-k45" firstAttribute="leading" secondItem="vhG-dW-UrD" secondAttribute="leading" constant="20" id="zlr-l2-SGf"/>
@@ -210,6 +222,9 @@
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="bgView" destination="cpQ-Dr-QlX" id="kOb-Qg-eOF"/>
+                        <outlet property="btiHitCont" destination="eeW-IS-tiV" id="e0y-e9-6mR"/>
+                        <outlet property="bti_text" destination="JKa-9j-wrF" id="Ynb-qX-bUo"/>
+                        <outlet property="bti_topCont" destination="euQ-ug-qoW" id="Pll-Tc-KKv"/>
                         <outlet property="fbbtn_topcont" destination="0oY-aR-jgG" id="R7z-Xs-MPU"/>
                         <outlet property="picView" destination="9Ag-dK-NWM" id="jcG-yT-BbF"/>
                         <outlet property="picViewHit" destination="D5j-1k-6cd" id="KnX-6U-9xK"/>
@@ -218,7 +233,7 @@
                         <outlet property="textView" destination="jIW-ps-qa5" id="Zub-iM-7lj"/>
                         <outlet property="videoView" destination="4WN-6D-iJF" id="rGW-aM-Pm7"/>
                         <outlet property="yuyinBtn" destination="wmd-QY-M4l" id="zzN-pD-Rx6"/>
-                        <outlet property="yy_topcont" destination="TWd-xI-2wO" id="ERc-Ss-ICm"/>
+                        <outlet property="yy_topcont" destination="9Bd-tr-j4J" id="LF4-ng-8do"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WGh-eF-g5w" userLabel="First Responder" sceneMemberID="firstResponder"/>

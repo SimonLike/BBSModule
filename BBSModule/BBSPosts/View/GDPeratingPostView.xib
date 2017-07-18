@@ -92,7 +92,6 @@
                         </button>
                         <button opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdz-a8-buY">
                             <rect key="frame" x="187.5" y="0.0" width="47" height="49"/>
-                            <state key="normal" image="module_splj"/>
                             <connections>
                                 <action selector="cz_click:" destination="iN0-l3-epB" eventType="touchUpInside" id="3OY-pJ-7Qb"/>
                             </connections>
@@ -159,9 +158,15 @@
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="biaoti_btn" destination="3IT-Ox-pO1" id="IIZ-S4-QDL"/>
                 <outlet property="btnsView" destination="RhR-Hf-zI7" id="vsb-k3-aFf"/>
+                <outlet property="call_btn" destination="sf6-Ig-nyX" id="Lbi-H9-91n"/>
+                <outlet property="jianpan_btn" destination="58j-qs-obC" id="cmA-bh-EiW"/>
+                <outlet property="pic_btn" destination="dpk-dL-Tza" id="Scr-za-Lze"/>
                 <outlet property="speakView" destination="sxf-eo-Ke4" id="pvU-ur-ANf"/>
                 <outlet property="speakbtn" destination="TLB-d3-qKr" id="EjI-cn-0zL"/>
+                <outlet property="video_btn" destination="gcN-uF-ITy" id="mdX-89-OQ5"/>
+                <outlet property="yuyin_btn" destination="b4g-fN-cLV" id="YeM-PW-F5y"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
@@ -170,7 +175,6 @@
         <image name="module-@" width="28" height="28"/>
         <image name="module-bt" width="60" height="26"/>
         <image name="module-jp" width="28" height="28"/>
-        <image name="module_splj" width="28" height="28"/>
         <image name="module_tpicon" width="28" height="28"/>
         <image name="module_videobtn" width="28" height="28"/>
         <image name="module_yyicon" width="28" height="28"/>

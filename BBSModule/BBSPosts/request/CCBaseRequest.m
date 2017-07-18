@@ -168,7 +168,6 @@
     }
 }
 
-
 #pragma mark - Request Image
 - (NSURLSessionDataTask *)RequestImageParams:(NSDictionary *)params
                                      success:(void(^)(NSURLSessionDataTask * task,id responseObject))success
@@ -182,18 +181,28 @@
             id value = params[key];
             if ([value isKindOfClass:[NSData class]])
             {
-                [formData appendPartWithFileData:value name:key fileName:[NSString stringWithFormat:@"%@.jpg",key] mimeType:@"image/jpeg"];
+//                if ([self getRequestType] == RequestTypeVideo) {
+//                  
+//                    [formData appendPartWithFileData:value name:key fileName:[NSString stringWithFormat:@"%@.mp4",key] mimeType:@"video/mp4"];
+//
+//                }else{
+                    [formData appendPartWithFileData:value name:key fileName:[NSString stringWithFormat:@"%@.png",key] mimeType:@"image/jpeg"];
+                    
+//                }
             }
         }
     } progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        success(task,responseObject);
+        NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
+
+        success(task,dict);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         //在这里可以对请求出错做统一的处理
         failure(task,error);
     }];
     return task;
 }
+
 
 @end

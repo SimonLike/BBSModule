@@ -20,22 +20,28 @@
 #import "WCLRecordEngine.h"
 #import "GDTextAlertView.h"
 #import "GDGetEditArticleRequest.h"
+
 #import "GDChooseFriendVC.h"
+
+#import "XQUploadHelper.h"
+#import "AFUploadFile.h"
 
 @interface GDSendPostVC () <UINavigationControllerDelegate, UIImagePickerControllerDelegate,UITextViewDelegate,AVAudioRecorderDelegate,AVAudioPlayerDelegate>{
     
-    NSURL *recordedFile;//存放路径
+    NSURL *_videoFilePath;////拍摄 本地视频地址url
     AVAudioPlayer *player;//播放
 //    AVAudioRecorder *recorder;//录制
     NSString *recoderName;//文件名
     NSString *_audioFilePath;
     
-    NSString * _videoPath;//拍摄 本地视频地址
-    
 }
 
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bti_topCont;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *btiHitCont;
+@property (weak, nonatomic) IBOutlet UITextField *bti_text;
 
 @property (strong, nonatomic) GDPeratingPostView *peratingPostView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *preraBottom;
@@ -82,6 +88,7 @@
     [super viewDidLoad];
     
     //默认设置
+    [self showBiaoTiHidden:YES];
     [self showYuyinHidden:YES];
     [self showPictureHidden:YES];
     [self showVideoHidden:YES];
@@ -110,6 +117,21 @@
     }
     
 }
+
+
+//标题
+-(void)showBiaoTiHidden:(BOOL)state{
+    
+    if (state) {
+        self.btiHitCont.constant = 0;
+        self.bti_topCont.constant = 0;
+        self.bti_text.hidden = YES;
+    }else{
+        self.btiHitCont.constant = 36;
+        self.bti_topCont.constant = 25;
+        self.bti_text.hidden = NO;
+    }
+}
 //语音
 -(void)showYuyinHidden:(BOOL)state{
     
@@ -118,7 +140,10 @@
     if (state) {
         self.yy_topcont.constant = 25 - imge.size.height;
         self.yuyinBtn.hidden = YES;
+        
+        [_peratingPostView.yuyin_btn setImage:[UIImage imageNamed:@"module_yyicon"] forState:UIControlStateNormal];
     }else{
+        [_peratingPostView.yuyin_btn setImage:[UIImage imageNamed:@"module_selectedyyicon"] forState:UIControlStateNormal];
         self.yy_topcont.constant = 25;
         self.yuyinBtn.hidden = NO;
     }
@@ -130,6 +155,8 @@
         self.pic_topcont.constant = 0;
         self.picViewHit.constant = 0;
         self.picView.hidden = YES;
+        
+        [_peratingPostView.pic_btn setImage:[UIImage imageNamed:@"module_tpicon"] forState:UIControlStateNormal];
     }else{
         self.pic_ts_label.text = @"你还可以上传8张";
         self.pic_topcont.constant = 15;
@@ -138,6 +165,9 @@
         CGRect frame = self.picView.pic_collection.frame;
         frame.size.height = self.picViewHit.constant;
         self.picView.pic_collection.frame = frame;
+        
+        [_peratingPostView.pic_btn setImage:[UIImage imageNamed:@"module_selectedtpicon"] forState:UIControlStateNormal];
+
     }
 }
 -(void)showVideoHidden:(BOOL)state{
@@ -146,13 +176,17 @@
     if (state) {
         self.fbbtn_topcont.constant = 30 - imge.size.height - 20;
         self.videoView.hidden = YES;
+        [_peratingPostView.video_btn setImage:[UIImage imageNamed:@"module_videobtn"] forState:UIControlStateNormal];
 
     }else{
         self.fbbtn_topcont.constant = 30;
-        self.videoView.hidden = YES;
+        self.videoView.hidden = NO;
+        [_peratingPostView.video_btn setImage:[UIImage imageNamed:@"module_selectedvideobtn"] forState:UIControlStateNormal];
+
     }
 
 }
+
 
 - (void)addViewBlock{
     __weak typeof(self) ws = self;
@@ -179,7 +213,7 @@
                 if (self.picspathArr.count>0) {
                     [ws setConstant];
                 }
-                //                [weakSelf uploadIma:thumbnails];
+                [ws uploadIma:thumbnails];
             }];
             [ws presentViewController:picker animated:YES completion:nil];
         }];
@@ -205,26 +239,58 @@
     _peratingPostView.hidden = YES;
     
     //操作
-    _peratingPostView.ppBlock = ^(NSInteger tag) {
+    _peratingPostView.ppBlock = ^(UIButton *btn,NSInteger tag) {
         if (tag == 10) {//语音
-            ws.peratingPostView.speakView.hidden = NO;
-            ws.peratingPostView.btnsView.hidden = YES;
+            if (!ws.picView.hidden || !ws.videoView.hidden) {
+                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
+                return ;
+            }
+            
+            if (ws.yuyinBtn.hidden) {
+                ws.peratingPostView.speakView.hidden = NO;
+                ws.peratingPostView.btnsView.hidden = YES;
+            }else{
+                [ws showYuyinHidden:YES];
+            }
+            
         }else if (tag == 11){//@
             GDChooseFriendVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDChooseFriend"];
             [ws.navigationController pushViewController:vc animated:YES];
         }else if (tag == 12){//图片
-            [ws showPictureHidden:NO];
+            
+            if (!ws.yuyinBtn.hidden || !ws.videoView.hidden) {
+                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
+                return ;
+            }
+            if (ws.picView.hidden) {
+                [ws showPictureHidden:NO];
+            }else{
+                [ws showPictureHidden:YES];
+            }
+            
         }else if (tag == 13){//视频
+            if (!ws.yuyinBtn.hidden || !ws.picView.hidden) {
+                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
+                return ;
+            }
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
             UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+               
+                
                 GDRecordVideoVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDRecordVideo"];
                 [ws.navigationController pushViewController:vc animated:YES];
                 
-                vc.recordBlock = ^(NSString *videoPath) {
-                    _videoPath = videoPath;
-                    [ws showVideoHidden:NO];
+                vc.recordBlock = ^(NSURL *url) {
                     [ws.navigationController popViewControllerAnimated:YES];
+
+                    NSURL *newVideoUrl ; //一般.mp4
+                    NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
+                    [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
+                    newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/Documents/output-%@.mp4", [formater stringFromDate:[NSDate date]]]] ;//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
+                    
+                    [ws convertVideoQuailtyWithInputURL:url outputURL:newVideoUrl completeHandler:nil];
+                    
                 };
                 
             }];
@@ -262,7 +328,12 @@
             [ws presentViewController:alertController animated:YES completion:nil];
             
         }else if (tag == 15){//标题
-            
+            if (ws.bti_text.hidden) {
+                [ws showBiaoTiHidden:NO];
+            }else{
+                [ws showBiaoTiHidden:YES];
+
+            }
         }else if (tag == 16){//键盘
             
         }
@@ -335,7 +406,7 @@
     return _audioRecorder;
 }
 - (IBAction)playVideo:(id)sender {
-    self.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:_videoPath]];
+    self.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:_videoFilePath];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[self.playerVC moviePlayer]];
     [[self.playerVC moviePlayer] prepareToPlay];
     
@@ -500,29 +571,163 @@
             
         }];
     }else if ([type isEqualToString:(NSString*)kUTTypeMovie]) {//视频
-        //获取视频的名称
-        NSString * videoPath=[NSString stringWithFormat:@"%@",[info objectForKey:UIImagePickerControllerMediaURL]];
-        NSRange range =[videoPath rangeOfString:@"trim."];//匹配得到的下标
-        NSString *content=[videoPath substringFromIndex:range.location+5];
-        //视频的后缀
-        NSRange rangeSuffix=[content rangeOfString:@"."];
-        NSString * suffixName=[content substringFromIndex:rangeSuffix.location+1];
-        //如果视频是mov格式的则转为MP4的
-        if ([suffixName isEqualToString:@"MOV"]) {
-            NSURL *videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
-            __weak typeof(self) weakSelf = self;
-            [self.recordEngine changeMovToMp4:videoUrl dataBlock:^(UIImage *movieImage) {
-                
-                [weakSelf.imagePicker dismissViewControllerAnimated:YES completion:^{
-                    _videoPath = weakSelf.recordEngine.videoPath;
-                    [weakSelf showVideoHidden:NO];
-             
-                }];
-            }];
-        }
+        
+        [picker dismissViewControllerAnimated:YES completion:^{
+
+            NSURL *sourceURL = [info objectForKey:UIImagePickerControllerMediaURL];
+            NSURL *newVideoUrl ; //一般.mp4
+            NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
+            [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
+            newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/Documents/output-%@.mp4", [formater stringFromDate:[NSDate date]]]] ;//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
+            [picker dismissViewControllerAnimated:YES completion:nil];
+            [self convertVideoQuailtyWithInputURL:sourceURL outputURL:newVideoUrl completeHandler:nil];
+            
+        }];
+        
+//        //获取视频的名称
+//
+//        NSString * videoPath=[NSString stringWithFormat:@"%@",[info objectForKey:UIImagePickerControllerMediaURL]];
+//        NSRange range =[videoPath rangeOfString:@"trim."];//匹配得到的下标
+//        NSString *content=[videoPath substringFromIndex:range.location+5];
+//        //视频的后缀
+//        NSRange rangeSuffix=[content rangeOfString:@"."];
+//        NSString * suffixName=[content substringFromIndex:rangeSuffix.location+1];
+//        //如果视频是mov格式的则转为MP4的
+//        if ([suffixName isEqualToString:@"MOV"]) {
+//            NSURL *videoUrl = [info objectForKey:UIImagePickerControllerMediaURL];
+//            __weak typeof(self) weakSelf = self;
+//            [self.recordEngine changeMovToMp4:videoUrl dataBlock:^(UIImage *movieImage) {
+//               
+//            }];
+//        }
     }
 
 }
+
+-(void)uploadIma:(NSArray *)pics{
+    for (UIImage *img in pics) {
+        long long num = [GDUtils getLongNumFromDate:[NSDate date]];
+        NSString* code = [GDUtils ret32bitString];
+        // 上传图片
+        //        NSDictionary *dict = @{@"mem_id":@"600209"};
+        NSData *fileData = UIImageJPEGRepresentation(img, 0.5);
+        NSString *fileName = [NSString stringWithFormat:@"%@-%lld-%@.png",[GDUtils readUser].token,num,code];//命名，必须唯一
+        
+        [AFUploadFile upLoadToUrlString:@"http://139.196.41.31:8080/GDLT/appservice/basicController/uploadPicture" parameters:nil fileData:fileData name:@"file" fileName:fileName mimeType:@"image/jpeg" response:JSON progress:^(NSProgress *uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
+            NSLog(@"success:%@ %@",responseObject, [responseObject objectForKey:@"msg"]);
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }
+}
+-(void)uploadVideo:(NSURL *)url{
+    // 如果是视频
+ 
+    //压缩视频
+    NSData *videoData = [NSData dataWithContentsOfURL:url];    //视频上传
+//    if (lengthTime >10.0f) {
+//        NSLog(@"文件过大只允许上传10s视频");
+//    }else {
+        long long num = [GDUtils getLongNumFromDate:[NSDate date]];
+        NSString* code = [GDUtils ret32bitString];
+        NSString *fileName = [NSString stringWithFormat:@"%@-%lld-%@.mp4",[GDUtils readUser].token,num,code];
+        NSDictionary *dict = @{@"token":[GDUtils readUser].token};
+        [AFUploadFile upLoadToUrlString:@"http://139.196.41.31:8080/GDLT/appservice/basicController/uploadFile" parameters:dict fileData:videoData name:@"file" fileName:fileName mimeType:@"video/quicktime" response:JSON progress:^(NSProgress *uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask *task, id responseObject) {
+            
+            NSLog(@"上传成功%@",responseObject);
+            
+            
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+            NSLog(@"%@",error);
+            
+        }];
+        
+//    }
+    
+}
+// 获取视频时间
+- (CGFloat) getVideoLength:(NSURL *)URL
+{
+    AVURLAsset *avUrl = [AVURLAsset assetWithURL:URL];
+    CMTime time = [avUrl duration];
+    int second = ceil(time.value/time.timescale);
+    return second;
+}
+
+#pragma mark - 视频压缩
+
+- (void)convertVideoQuailtyWithInputURL:(NSURL*)inputURL
+                               outputURL:(NSURL*)outputURL
+                         completeHandler:(void (^)(AVAssetExportSession*))handler
+{
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
+    AVAssetExportSession *exportSession= [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
+    exportSession.outputURL = outputURL;
+    exportSession.outputFileType = AVFileTypeMPEG4;
+    [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
+        switch (exportSession.status)
+        {
+            case AVAssetExportSessionStatusUnknown:
+                break;
+            case AVAssetExportSessionStatusWaiting:
+                break;
+            case AVAssetExportSessionStatusExporting:
+                break;
+            case AVAssetExportSessionStatusCompleted: {
+                _videoFilePath = outputURL;
+                [self showVideoHidden:NO];
+
+                [self uploadVideo:outputURL];
+                break;
+            }
+            case AVAssetExportSessionStatusFailed:
+                break;
+        }
+    }];
+}
+
+// 获取视频的大小
+- (CGFloat) getFileSize:(NSString *)path
+{
+    NSFileManager *fileManager = [[NSFileManager alloc] init] ;
+    float filesize = -1.0;
+    if ([fileManager fileExistsAtPath:path]) {
+        NSDictionary *fileDic = [fileManager attributesOfItemAtPath:path error:nil];//获取文件的属性
+        unsigned long long size = [[fileDic objectForKey:NSFileSize] longLongValue];
+        filesize = 1.0*size/1024;
+    }
+    return filesize;
+}
+#pragma mark - 获取当前时间
+- (NSString *)getCurrentTime{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateTime = [formatter stringFromDate:[NSDate date]];
+    //    NSString *str = [NSString stringWithFormat:@"%@mdxx",dateTime];
+    //    NSString *tokenStr = [str stringToMD5:str];
+    return dateTime;
+    
+}
+#pragma mark 图片保存完毕的回调
+- (void) image: (UIImage *) image didFinishSavingWithError:(NSError *) error contextInfo: (void *)contextIn {
+    NSLog(@"照片保存成功");
+}
+
+#pragma mark 视频保存完毕的回调
+- (void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextIn {
+    if (error) {
+        NSLog(@"保存视频过程中发生错误，错误信息:%@",error.localizedDescription);
+    }else{
+        NSLog(@"视频保存成功.");
+    }
+}
+
 
 -(void)setConstant{
     
@@ -574,6 +779,9 @@
     
     return YES;
 }
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 
 #pragma mark - set、get方法
 - (WCLRecordEngine *)recordEngine {
@@ -589,6 +797,9 @@
     }
     return _picspathArr;
 }
+
+
+
 /*
 #pragma mark - Navigation
 

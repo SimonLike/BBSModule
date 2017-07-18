@@ -10,7 +10,8 @@
 #import "GDUserObj.h"
 
 @interface GDUtils : NSObject
-
++ (long long)getLongNumFromDate:(NSDate *)date;
++(NSString *)ret32bitString;
 //存储、读取个人数据
 + (GDUserObj *)readUser;
 + (void)archiveUser:(GDUserObj *)obj;

@@ -54,14 +54,11 @@
 - (IBAction)spk_click:(UIButton *)sender {
     _speakView.hidden = YES;
     _btnsView.hidden = NO;
-  
-    
 }
 
 - (IBAction)cz_click:(UIButton *)sender {
-    
     if (_ppBlock) {
-        _ppBlock(sender.tag);
+        _ppBlock(sender,sender.tag);
     }
 }
 

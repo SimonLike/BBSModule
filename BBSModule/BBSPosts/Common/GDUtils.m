@@ -10,7 +10,18 @@
 #import "GDUtils.h"
 @implementation GDUtils
 
-
++ (long long)getLongNumFromDate:(NSDate *)date{
+    NSTimeInterval time = [date timeIntervalSince1970];
+    // NSTimeInterval返回的是double类型，输出会显示为10位整数加小数点加一些其他值
+    // 如果想转成int型，必须转成long long型才够大。
+    long long dTime = [[NSNumber numberWithDouble:time] longLongValue] ; // 将double转为long long型
+    return dTime;
+}
++(NSString *)ret32bitString{
+    char data[32];
+    for (int x=0;x<32;data[x++] = (char)('A' + (arc4random_uniform(26))));
+    return [[NSString alloc] initWithBytes:data length:32 encoding:NSUTF8StringEncoding];
+}
 //存储、读取个人数据
 + (GDUserObj *)readUser{
     NSData *oldData = [[NSUserDefaults standardUserDefaults] objectForKey:USERINFO];
