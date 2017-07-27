@@ -19,9 +19,9 @@
     self.pl_view.layer.borderWidth = 1;
 }
 -(void)initWithReplyMeObj:(GDReplyMeObj *)obj{
-    [_peoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PIC_HOST,obj.head]] placeholderImage:nil];
+    [_peoImage sd_setImageWithURL:[NSURL URLWithString:PEO_HEAD_PIC(obj.username)] placeholderImage:nil];
     _nameLabel.text = obj.name;
-    _timeLabel.text = obj.create_time;
+    _timeLabel.text = obj.createTime;
 //    _contLabel.text = [NSString stringWithFormat:@"评论了我的帖子 %@",obj.title];
     _pl_label.text = obj.content;
     

@@ -127,6 +127,7 @@
             <connections>
                 <outlet property="bgView" destination="E0n-cT-azR" id="TRi-yn-XCy"/>
                 <outlet property="contLabel" destination="wA2-Wu-cka" id="VxM-Bl-lA9"/>
+                <outlet property="del_btn" destination="qtR-hw-bEI" id="0AY-Ky-ude"/>
                 <outlet property="nameLabel" destination="lPt-Ge-aMf" id="oXp-gD-khH"/>
                 <outlet property="peoImage" destination="DKh-tX-E0E" id="wPd-6I-ahm"/>
                 <outlet property="pl_view" destination="Bu0-aV-XNy" id="3yM-F8-NEM"/>

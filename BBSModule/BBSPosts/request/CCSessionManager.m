@@ -50,19 +50,27 @@ static CCSessionManager * shareInstance = nil;
         self.responseSerializer = [AFHTTPResponseSerializer serializer];
         [self.securityPolicy setAllowInvalidCertificates:YES];
         
-//        //HTTPS
-//        NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"ccvzb.cn" ofType:@"cer"];
+        //HTTPS
+//        NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"tomcat" ofType:@"cer"];
+//        
+//        DLog(@"cerPath--->%@",cerPath);
 //        NSData *certData = [NSData dataWithContentsOfFile:cerPath];
+//        NSSet *set = [[NSSet alloc] initWithObjects:certData,nil];
+//
 //        AFSecurityPolicy *securityPolicy = [AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeCertificate];
 //        //是否需要验证自建证书
 //        securityPolicy.allowInvalidCertificates = YES;
 //        //证书的域名与请求的域名是否设置一致
 //        securityPolicy.validatesDomainName = NO;
-//        securityPolicy.pinnedCertificates = @[certData];
+//        securityPolicy.pinnedCertificates = set;
 //        self.securityPolicy = securityPolicy;
+        
+        //配置https
+
     }
     return self;
 }
+
 
 
 @end

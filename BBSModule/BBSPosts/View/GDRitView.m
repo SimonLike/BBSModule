@@ -16,8 +16,10 @@
     [super awakeFromNib];
     _ritTable.delegate = self;
     _ritTable.dataSource = self;
+    _ritTable.layer.borderWidth = 1;
+    _ritTable.layer.borderColor = RGBCOLOR16(0xeeeeee).CGColor;
     _ritTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _ritArray = @[@"回复我的",@"@我的",@"我的评论",@"发布帖子",@"个人中心"];
+    _ritArray = @[@"回复我的",@"@我的",@"我的评论",@"个人中心"];
 }
 
 +(instancetype) initRitView{
@@ -54,6 +56,15 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     cell.label.text = _ritArray[indexPath.row];
+    if (indexPath.row==0) {
+        if (_replyNum.integerValue >0) {
+            cell.dianImage.hidden = NO;
+        }
+    }else if(indexPath.row == 1){
+        if (_callNum.integerValue > 0) {
+            cell.dianImage.hidden = NO;
+        }
+    }
     
     return cell;
 }

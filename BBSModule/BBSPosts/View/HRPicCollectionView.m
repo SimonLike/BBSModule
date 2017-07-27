@@ -62,17 +62,18 @@
     cell.backgroundColor = [UIColor whiteColor];
     if (self.picTypeTnt == 1) {
         cell.celBtn.hidden = YES;
-//        [cell.picIma sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",PIC_HOST,self.picspathArr[indexPath.row]]] placeholderImage:nil] ;
+        [cell.picIma sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PIC_HOST,self.picspathArr[indexPath.row]]] placeholderImage:nil] ;
+//        DLog(@"picIma---->%@",[NSString stringWithFormat:@"%@%@",PIC_HOST,self.picspathArr[indexPath.row]])
     }else{
         if (indexPath.row != self.picspathArr.count) {
-//            [cell.picIma sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",PIC_HOST,self.picspathArr[indexPath.row]]] placeholderImage:nil] ;
-            cell.picIma.image = self.picspathArr[indexPath.row];
+            [cell.picIma sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PIC_HOST,self.picspathArr[indexPath.row]]] placeholderImage:nil] ;
             cell.celBtn.hidden = NO;
             cell.celBtn.tag = indexPath.row;
         }else{
             cell.picIma.image = [UIImage imageNamed:@"icon_upiantianjia"];
             cell.celBtn.hidden = YES;
         }
+        
         cell.picBlock = ^(NSInteger tag) {
             if (self.delPicBlock) {
                 self.delPicBlock(tag);
@@ -98,7 +99,7 @@
 //定义每个UICollectionView 的大小
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((self.pic_collection.frame.size.width - 40)/4, (self.pic_collection.frame.size.width - 40)/4);
+    return CGSizeMake((self.pic_collection.frame.size.width - 30)/3, (self.pic_collection.frame.size.width - 30)/3);
 }
 ////定义每个UICollectionView 的 margin
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

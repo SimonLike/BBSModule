@@ -15,5 +15,8 @@ typedef void(^RitBlock)(NSInteger tag);
 @property (nonatomic, strong) NSArray *ritArray;
 @property (nonatomic, copy) RitBlock ritBlock;
 
+@property (nonatomic, strong) NSString *callNum;
+@property (nonatomic, strong) NSString *replyNum;
+
 +(instancetype) initRitView;
 @end

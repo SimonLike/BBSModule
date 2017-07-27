@@ -13,6 +13,8 @@
 #import "GDPostDetailsVC.h"
 #import "GDMyArticleListRequest.h"
 #import "GDMyArticleListObj.h"
+#import "GDSendPostVC.h"
+#import "GDDeleteArticleRequest.h"
 
 @interface GDMyPostsVC ()
 @property (weak, nonatomic) IBOutlet UITableView *postTable;
@@ -54,6 +56,7 @@
         if (responseObject) {
             
             [self.postsArray addObjectsFromArray:[GDMyArticleListObj objectArrayWithKeyValuesArray:responseObject[@"data"][@"articleList"]]];
+            [_postTable reloadData];
         }
         [_postTable.mj_header endRefreshing];
         [_postTable.mj_footer endRefreshing];
@@ -89,14 +92,47 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
-    [cell initWithMyArticleListObj:self.postsArray[indexPath.row]];
+    cell.tag = indexPath.row;
     
+    [cell initWithMyArticleListObj:self.postsArray[indexPath.row]];
+    __weak typeof(self)ws = self;
+    cell.postsBlock = ^(NSInteger cellTag, NSInteger tag) {
+        GDMyArticleListObj *obj = ws.postsArray[cellTag];
+        if (tag == 10) {//编辑贴子
+            GDSendPostVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDSendPost"];
+            vc.vcType = @"editPost";
+            vc.articleId = obj.id;
+            [self.navigationController pushViewController:vc animated:YES];
+        }else{
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"是否确定删除该帖子？" preferredStyle: UIAlertControllerStyleAlert];
+            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                
+                GDDeleteArticleRequest *request = [[GDDeleteArticleRequest alloc] initWithArticleId:obj.id];
+                [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
+                    if(responseObject){
+                        DLog(@"responseObject-->%@",responseObject);
+                        [_postTable.mj_header beginRefreshing];
+                    }
+                } failure:^(NSURLSessionDataTask *task, NSError *error) {
+                    
+                }];
+                
+            }];
+            UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+            [alertController addAction:action1];
+            [alertController addAction:action2];
+            [ws presentViewController:alertController animated:YES completion:nil];
+            
+        }
+    };
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    GDMyArticleListObj *obj = self.postsArray[indexPath.row];
+
     GDPostDetailsVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDPostDetails"];
+    vc.articleId = obj.id;
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(NSMutableArray *)postsArray{

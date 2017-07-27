@@ -10,25 +10,26 @@
 
 @interface GDMyArticleListObj : NSObject
 /*
- "content": "不会的不会的",       //内容
- "id": 9,                         //帖子ID
- "num": "",                       //帖子评论数
- "title": "明天的飞机，希望别误机", //帖子标题
- "audio": "",                       //音频
- "create_time": "2017-06-24 17:25:50",
- "image": "",                       //图片
- "user_id": 1,                      //发帖人ID
- "video": ""                        //视频URL
+ id	int	帖子主键ID
+ userId	int	用户ID
+ title	string	帖子主题
+ image	string	图片链接[“url1”,”url2”…]
+ video	String	视频URL
+ audio	string	音频url
+ createTime	String	帖子发布时间
+ content	string	帖子内容
+ num	int	帖子回复数
+
 
 */
-@property (nonatomic,copy) NSString *content;
 @property (nonatomic,assign) NSInteger id;
-@property (nonatomic,assign) NSInteger num;
+@property (nonatomic,assign) NSInteger userId;
 @property (nonatomic,copy) NSString *title;
-@property (nonatomic,copy) NSString *audio;
-@property (nonatomic,copy) NSString *create_time;
 @property (nonatomic,copy) NSString *image;
-@property (nonatomic,assign) NSInteger user_id;
 @property (nonatomic,copy) NSString *video;
+@property (nonatomic,copy) NSString *audio;
+@property (nonatomic,copy) NSString *createTime;
+@property (nonatomic,copy) NSString *content;
+@property (nonatomic,assign) NSInteger num;
 
 @end

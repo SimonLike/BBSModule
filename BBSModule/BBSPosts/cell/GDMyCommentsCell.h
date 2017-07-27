@@ -23,6 +23,7 @@ typedef void(^DeleteBlock)(NSInteger cellTag);
 @property (weak, nonatomic) IBOutlet UILabel *pltime_label;
 @property (weak, nonatomic) IBOutlet UILabel *plcont_label;
 @property (copy, nonatomic) DeleteBlock  deleteBlock;
+@property (weak, nonatomic) IBOutlet UIButton *del_btn;
 
 @property (nonatomic, assign) CGFloat heights;
 

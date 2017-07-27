@@ -11,16 +11,20 @@
 
 @implementation GDReplyCommentRequest
 - (instancetype) initWithArticleId:(NSInteger)articleId
-                      CommentId:(NSInteger)commentId
-                         Attach:(NSString *)attach
-                        Content:(NSString *)content
+                         CommentId:(NSInteger)commentId
+                             Title:(NSString *)title
+                            Attach:(NSString *)attach
+                           Content:(NSString *)content
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
         [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
+        [requestDict setObject:[GDUtils readUser].token forKey:@"token"];
+
         [requestDict setObject:@(articleId) forKey:@"articleId"];
         [requestDict setObject:@(commentId) forKey:@"commentId"];
+        [requestDict setObject:title forKey:@"title"];
         [requestDict setObject:attach forKey:@"attach"];
         [requestDict setObject:content forKey:@"content"];
         

@@ -30,6 +30,9 @@
 @property (strong, nonatomic) NSMutableArray *moduleArray;
 @property (assign, nonatomic) NSInteger page;
 @property (strong, nonatomic) GDTextAlertView *textAlertView;
+
+@property (nonatomic, strong) NSString *callNum;
+@property (nonatomic, strong) NSString *replyNum;
 @end
 
 @implementation GDModuleHomeVC
@@ -49,10 +52,16 @@
     [GDUtils setupRefresh:_moduleTable WithDelegate:self HeaderSelector:@selector(headerRefresh) FooterSelector:@selector(footerRefresh)];
     _page = 1;
 
-    [self getArticleList];
+    [_moduleTable.mj_header beginRefreshing];
 }
-#pragma mark - MJRefresh Delegate
+#pragma mark --发布帖子
+- (IBAction)sendpostClick:(id)sender {
+    GDSendPostVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDSendPost"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
+
+#pragma mark - MJRefresh Delegate
 //上拉刷新
 -(void)headerRefresh{
     _page = 1;
@@ -71,6 +80,9 @@
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         DLog(@"responseObject--->%@",responseObject);
         if (responseObject) {
+            _callNum = responseObject[@"data"][@"callNum"];
+            _replyNum = responseObject[@"data"][@"replyNum"];
+            
             [self.moduleArray addObjectsFromArray:[GDArticleListObj objectArrayWithKeyValuesArray: responseObject[@"data"][@"articleList"]]];
             [self.moduleTable reloadData];
         }
@@ -89,7 +101,7 @@
             //请空回复输入框 赋默认值
             _textAlertView.textView.text = @"请输入文字";
             
-            [self getArticleList];//刷新首页状态
+            [_moduleTable.mj_header beginRefreshing];//刷新首页状态
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -102,6 +114,9 @@
         _ritView.frame = self.view.bounds;
         [[UIApplication sharedApplication].keyWindow addSubview:_ritView];
     }
+    _ritView.callNum = _callNum;
+    _ritView.replyNum = _replyNum;
+    
     _ritView.hidden = NO;
     __weak typeof(self) ws = self;
 
@@ -116,26 +131,16 @@
         }else if (tag == 2){//,@"我的评论"
             GDMyCommentsVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDMyComments"];
             [ws.navigationController pushViewController:vc animated:YES];
-        }else if (tag == 3){//,发布帖子
-            GDSendPostVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDSendPost"];
-            [ws.navigationController pushViewController:vc animated:YES];
-        }else if (tag == 4){//,个人中心
+        }else if (tag == 3){//,个人中心
             GDPersonalCenterVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDPersonalCenter"];
             [ws.navigationController pushViewController:vc animated:YES];
         }
         ws.ritView.hidden = YES;
 
     };
-    
-//    UITapGestureRecognizer *backTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideritView)];
-//    backTap.numberOfTapsRequired = 1;
-//    [_ritView addGestureRecognizer:backTap];
-    
+
 }
-//隐藏菜单
-//-(void)hideritView{
-//    _ritView.hidden = YES;
-//}
+
 #pragma mark --UITableView delegate datasoure
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -150,15 +155,15 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GDArticleListObj *obj = self.moduleArray[indexPath.row];
-    if (![obj.video isEqualToString:@""]) {
-        return 370;
-    }else if (![obj.audio isEqualToString:@""]) {
-        return 242;
-    }else {
+//    GDArticleListObj *obj = self.moduleArray[indexPath.row];
+//    if (![obj.video isEqualToString:@""]) {
+//        return 370;
+//    }else if (![obj.audio isEqualToString:@""]) {
+//        return 242;
+//    }else {
         GDModuleHomeCell *cell = (GDModuleHomeCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
         return cell.heights;
-    }
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -176,11 +181,9 @@
     __weak typeof(self)ws = self;
     cell.moduleBlock = ^(NSInteger tag) {
         if (tag == 10) {//评论
-            GDMyCommentsVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDMyComments"];
-            [ws.navigationController pushViewController:vc animated:YES];
-        }else if (tag == 11) {//回复
-//            GDReplyDetailsVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDReplyDetails"];
+//            GDMyCommentsVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDMyComments"];
 //            [ws.navigationController pushViewController:vc animated:YES];
+        }else if (tag == 11) {//回复
             if (!ws.textAlertView) {
                 ws.textAlertView = [GDTextAlertView initTextAlertView];
                 ws.textAlertView.frame = self.view.bounds;
@@ -211,6 +214,8 @@
                 GDDeleteArticleRequest *request = [[GDDeleteArticleRequest alloc] initWithArticleId:obj.id];
                 [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
                     if(responseObject){
+                        [_moduleTable.mj_header beginRefreshing];
+
                         DLog(@"responseObject-->%@",responseObject);
                     }
                 } failure:^(NSURLSessionDataTask *task, NSError *error) {

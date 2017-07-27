@@ -58,11 +58,11 @@
         [_commentTable.mj_footer endRefreshing];
     }];
 }
--(void)deleteMyCommentTid:(NSInteger)tid{
-   GDDeleteMyCommentRequest *request = [[GDDeleteMyCommentRequest alloc] initWithTid:tid];
+-(void)deleteMyCommentId:(NSInteger)commentId CommId:(NSInteger)commId{
+   GDDeleteMyCommentRequest *request = [[GDDeleteMyCommentRequest alloc] initWithCommentId:commentId CommId:commId];
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         if (responseObject) {
-            [self getMyComment];
+            [_commentTable.mj_header beginRefreshing];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -96,12 +96,13 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
+    cell.del_btn.tag = 100 + indexPath.row;
     [cell initWithMyCommentObj:self.commetArray[indexPath.row]];
     
     __weak typeof(self)ws = self;
     cell.deleteBlock = ^(NSInteger cellTag) {
-        GDMyCommentObj *obj = ws.commetArray[cellTag];
-        [ws deleteMyCommentTid:obj.topic_id];
+        GDMyCommentObj *obj = ws.commetArray[cellTag - 100];
+        [ws deleteMyCommentId:obj.id CommId:obj.commId];
     };
     return cell;
 }

@@ -10,13 +10,18 @@
 #import "GDDeleteMyCommentRequest.h"
 
 @implementation GDDeleteMyCommentRequest
-- (instancetype) initWithTid:(NSInteger)tid
+- (instancetype) initWithCommentId:(NSInteger)commentId CommId:(NSInteger)commId
 {
     if (self = [super init]) {
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
         [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
-        [requestDict setObject:@(tid) forKey:@"id"];
+        [requestDict setObject:[GDUtils readUser].token forKey:@"token"];
+
+        [requestDict setObject:@(commentId) forKey:@"id"];
+        if (commId != 0) {
+            [requestDict setObject:@(commId) forKey:@"commId"];
+        }
         
         [super initWithArgumentDictionary:requestDict];
     }

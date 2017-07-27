@@ -9,5 +9,5 @@
 #import "CCBaseRequest.h"
 
 @interface GDDeleteMyCommentRequest : CCBaseRequest
-- (instancetype) initWithTid:(NSInteger)tid;
+- (instancetype) initWithCommentId:(NSInteger)commentId CommId:(NSInteger)commId;
 @end

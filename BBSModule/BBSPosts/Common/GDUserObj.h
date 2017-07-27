@@ -11,4 +11,5 @@
 @interface GDUserObj : NSObject
 @property (nonatomic, assign) NSInteger userId;//用户id
 @property (nonatomic, strong) NSString* token;//
+@property (nonatomic, assign) NSInteger projectId;//
 @end

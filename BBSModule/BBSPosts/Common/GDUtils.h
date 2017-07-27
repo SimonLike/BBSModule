@@ -16,5 +16,6 @@
 + (GDUserObj *)readUser;
 + (void)archiveUser:(GDUserObj *)obj;
 + (void)setupRefresh:(UIScrollView*)scrollView WithDelegate:(id)delegate HeaderSelector:(SEL)headSelector FooterSelector:(SEL)footSelector;
++ (CGSize)getTextMultilineContent:(NSString*)text withFont:(UIFont*)font withSize:(CGSize)size;
 + (CGSize)textHeightSize:(NSString *)text maxSize:(CGSize)maxSize textFont:(UIFont *)font;
 @end

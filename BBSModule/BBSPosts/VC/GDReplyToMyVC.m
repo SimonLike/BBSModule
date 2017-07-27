@@ -24,8 +24,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    self.navBtnRight.hidden = NO;
+    [self.navBtnRight setTitle:@"清空" forState:UIControlStateNormal];
+    
     [GDUtils setupRefresh:_replyTable WithDelegate:self HeaderSelector:@selector(headerRefresh) FooterSelector:@selector(footerRefresh)];
     [_replyTable.mj_header beginRefreshing];
+}
+
+
+-(void)rightAction{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self deleteDeleteReplyMe];
+    }];
+    UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    [alertController addAction:action2];
+    [alertController addAction:action3];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - MJRefresh Delegate
@@ -60,7 +77,7 @@
     GDDeleteReplyMeRequest *request = [[GDDeleteReplyMeRequest alloc] init];
     [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
         if (responseObject) {
-            [self getReplyMe];
+            [_replyTable.mj_header beginRefreshing];
         }
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         

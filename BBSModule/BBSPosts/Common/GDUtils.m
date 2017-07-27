@@ -66,6 +66,27 @@
         scrollView.mj_footer = footer;
     }
 }
+/**
+ *  获取字体的大小范围
+ *  多行显示
+ */
++ (CGSize)getTextMultilineContent:(NSString*)text withFont:(UIFont*)font withSize:(CGSize)size
+{
+    CGSize mSize;
+    if ([NSString isBlankString:text]) {
+        
+        return CGSizeMake(0, 0);
+    }
+    if (IOS7) {
+        mSize = [text boundingRectWithSize:size
+                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                attributes:@{NSFontAttributeName:font}
+                                   context:nil].size;
+    } else {
+        mSize = [text sizeWithFont:font constrainedToSize:size lineBreakMode:NSLineBreakByWordWrapping];
+    }
+    return mSize;
+}
 
 + (CGSize)textHeightSize:(NSString *)text maxSize:(CGSize)maxSize textFont:(UIFont *)font
 {
@@ -76,5 +97,6 @@
                         NSStringDrawingUsesFontLeading
                                        attributes:dic context:nil].size;
     return labelSize;
+   
 }
 @end

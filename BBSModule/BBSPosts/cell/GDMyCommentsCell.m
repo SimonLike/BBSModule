@@ -20,14 +20,12 @@
 }
 
 -(void)initWithMyCommentObj:(GDMyCommentObj *)obj{
-    [_peoImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",PIC_HOST,obj.head]] placeholderImage:nil];
+    [_peoImage sd_setImageWithURL:[NSURL URLWithString:PEO_HEAD_PIC(obj.username)] placeholderImage:nil];
     _nameLabel.text = obj.name;
-    _timeLabel.text = obj.create_time;
+    _timeLabel.text = obj.publicTime;
     _contLabel.text = obj.title;
-
-#pragma error
     
-    _pltime_label.text = @"缺少评论时间字段";
+    _pltime_label.text = obj.createTime;
     _plcont_label.text =obj.content;
 
     CGFloat selfW = [UIScreen mainScreen].bounds.size.width - 38*2;

@@ -21,11 +21,15 @@
                         <action selector="btnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="ePr-V1-JS5"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2uG-j3-45c">
+                    <rect key="frame" x="230" y="57" width="132" height="50"/>
+                    <state key="normal" backgroundImage="rit_box"/>
+                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MpR-QZ-r50">
-                    <rect key="frame" x="230" y="70" width="132" height="200"/>
+                    <rect key="frame" x="230" y="70" width="132" height="160"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="200" id="OEF-tb-YVk"/>
+                        <constraint firstAttribute="height" constant="160" id="OEF-tb-YVk"/>
                         <constraint firstAttribute="width" constant="132" id="Wro-JZ-zdt"/>
                     </constraints>
                 </tableView>
@@ -36,8 +40,11 @@
                 <constraint firstItem="tI0-FU-EtE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="HAd-E2-GJv"/>
                 <constraint firstItem="tI0-FU-EtE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OW7-7j-VV1"/>
                 <constraint firstItem="MpR-QZ-r50" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="70" id="T3f-Hm-yyQ"/>
+                <constraint firstItem="2uG-j3-45c" firstAttribute="leading" secondItem="MpR-QZ-r50" secondAttribute="leading" id="fVS-dQ-Jz4"/>
                 <constraint firstAttribute="trailing" secondItem="tI0-FU-EtE" secondAttribute="trailing" id="gaj-Qw-2Do"/>
+                <constraint firstItem="2uG-j3-45c" firstAttribute="trailing" secondItem="MpR-QZ-r50" secondAttribute="trailing" id="iFv-Bt-Jjo"/>
                 <constraint firstAttribute="trailing" secondItem="MpR-QZ-r50" secondAttribute="trailing" constant="13" id="j8H-9m-ffh"/>
+                <constraint firstItem="2uG-j3-45c" firstAttribute="top" secondItem="MpR-QZ-r50" secondAttribute="top" constant="-13" id="vp5-px-aKh"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <connections>
@@ -46,4 +53,7 @@
             <point key="canvasLocation" x="35.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="rit_box" width="131" height="50"/>
+    </resources>
 </document>

@@ -11,5 +11,6 @@
 @interface GDChooseFriendCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *txImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *selectImage;
 
 @end

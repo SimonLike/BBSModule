@@ -17,11 +17,14 @@
 }
 -(void)initWithMyArticleListObj:(GDMyArticleListObj *)obj{
     self.tltLabel.text = obj.title;
-    self.timeLabel.text = obj.create_time;
+    self.timeLabel.text = obj.createTime;
     self.hfnumLabel.text = [NSString stringWithFormat:@"有%ld人回复",(long)obj.num];
 }
 - (IBAction)click:(UIButton *)sender {
-    DLog(@"sender-->%@",sender.tag);
+    DLog(@"sender-->%ld",(long)sender.tag);
+    if (_postsBlock) {
+        _postsBlock(self.tag,sender.tag);
+    }
 }
 
 

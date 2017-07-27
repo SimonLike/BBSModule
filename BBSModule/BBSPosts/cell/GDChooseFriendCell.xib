@@ -27,21 +27,28 @@
                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="module-dxk" translatesAutoresizingMaskIntoConstraints="NO" id="4cW-VM-VPl">
+                        <rect key="frame" x="285" y="16" width="15" height="15"/>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="JwH-Kx-dlk" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="F2R-xq-cQ2"/>
+                    <constraint firstItem="4cW-VM-VPl" firstAttribute="centerY" secondItem="43Q-Tj-vMn" secondAttribute="centerY" id="Nqx-S0-ynM"/>
                     <constraint firstItem="43Q-Tj-vMn" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="fea-xm-fF3"/>
                     <constraint firstItem="43Q-Tj-vMn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="13" id="hvI-in-zxw"/>
+                    <constraint firstAttribute="trailing" secondItem="4cW-VM-VPl" secondAttribute="trailing" constant="20" id="vH6-c5-nie"/>
                     <constraint firstItem="JwH-Kx-dlk" firstAttribute="leading" secondItem="43Q-Tj-vMn" secondAttribute="trailing" constant="13" id="xtu-5y-hlL"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="nameLabel" destination="JwH-Kx-dlk" id="OtY-Fy-b5f"/>
+                <outlet property="selectImage" destination="4cW-VM-VPl" id="oEB-8n-q4E"/>
                 <outlet property="txImage" destination="43Q-Tj-vMn" id="QTZ-X1-3Fn"/>
             </connections>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="module-dxk" width="15" height="15"/>
         <image name="module_touxiang" width="31" height="31"/>
     </resources>
 </document>

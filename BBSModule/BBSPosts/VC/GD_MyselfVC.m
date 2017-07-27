@@ -121,7 +121,7 @@
     GDCallMeObj *obj = self.callArray[indexPath.row];
     
     GDPostDetailsVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDPostDetails"];
-    vc.articleId = obj.article_id;
+    vc.articleId = obj.articleId;
     [self.navigationController pushViewController:vc animated:YES];
 
 }

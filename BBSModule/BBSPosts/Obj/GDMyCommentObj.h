@@ -10,35 +10,34 @@
 
 @interface GDMyCommentObj : NSObject
 /*
- "call": "",              //@用户用户，字符串
- "status": 0,             //0显示，1已删除
- "comm_id": 7,            //评论为Null,回复有值
- "type": 1,              //0评论 1回复
- "id": 8,                //主键，用户删除回复
- "content": "我也觉得不好看",      //内容
- "title": "微微一笑很倾城好看吗？",   //帖子标题
- "attach": "",                        //附件，字符串
- "name": "薇薇",                      //发帖人昵称
- "create_time": "2017-06-23 11:01:25",
- "comm_parent_id": 7,      //评论的父ID
- "user_id": 1,              //我的ID，评论人ID
- "head":                     //头像URL
- "http://file.youyanknow.com/yyzbUploadFile/2017/06/11/114626/5.png",
- "topic_id": 5              //帖子ID
+ status	int	0—成 1—失败 2--token
+ id	int	回复或者评论的ID
+ userId	int	发帖人ID
+ topicId	Int	帖子ID
+ title	string	我评论的帖子title
+ attach	string	附件URL
+ createTime	String	评论发表时间
+ publicTime	String	帖子发布时间
+ content	string	评论内容
+ name	string	发帖人昵称
+ commId	Int	评论为空，回复有值
+ username	String	拼接头像
+ recordsTotal	int	评论总数用于分页
+
  */
 
 
-@property (nonatomic, copy) NSString *call;
-@property (nonatomic, assign) NSInteger status;
-@property (nonatomic, assign) NSInteger comm_id;
 @property (nonatomic, assign) NSInteger id;
-@property (nonatomic, assign) NSInteger topic_id;
+@property (nonatomic, assign) NSInteger topicId;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *attach;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *createTime;
+@property (nonatomic, copy) NSString *publicTime;
 @property (nonatomic, assign) NSInteger comm_parent_id;
-@property (nonatomic, assign) NSInteger user_id;
-@property (nonatomic, copy) NSString *head;
+@property (nonatomic, assign) NSInteger userId;
+@property (nonatomic, copy) NSString *username;
+@property (nonatomic, assign) NSInteger commId;
+
 @end

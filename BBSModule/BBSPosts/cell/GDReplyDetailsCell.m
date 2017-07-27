@@ -14,6 +14,15 @@
     [super awakeFromNib];
     // Initialization code
 }
+-(void)initWithReplyListObj:(GDReplyListObj *)obj{
+    _nameLabel.text = obj.name;
+    _timeLabel.text = obj.createTime;
+    if (obj.targetId) {
+        _replyLabel.text = [NSString stringWithFormat:@"回复%@：%@",obj.targetName,obj.content];
+    }else{
+        _replyLabel.text = obj.content;
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

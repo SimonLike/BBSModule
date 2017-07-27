@@ -21,6 +21,7 @@
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
     [encoder encodeInteger:self.userId forKey:@"userId"];
+    [encoder encodeInteger:self.projectId forKey:@"projectId"];
     [encoder encodeObject:self.token forKey:@"token"];
 
 }
@@ -30,6 +31,7 @@
     self = [super init];
     if (self) {
         self.userId = [decoder decodeIntegerForKey:@"userId"];
+        self.projectId = [decoder decodeIntegerForKey:@"projectId"];
         self.token = [decoder decodeObjectForKey:@"token"];
      
     }

@@ -17,7 +17,12 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
+    if (selected) {
+        self.selectImage.image = [UIImage imageNamed:@"module-selecteddxk"];
+    }else{
+        self.selectImage.image = [UIImage imageNamed:@"module-dxk"];
+    }
     // Configure the view for the selected state
 }
 

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^CallFriendBlock)(NSArray *array);
+
 @interface GDChooseFriendVC : BaseViewController
+@property (nonatomic, copy)CallFriendBlock callblock;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GDArticleListObj.h"
+#import "HRPicCollectionView.h"
 
 typedef void(^ModuleHomeBlock)(NSInteger tag);
 
@@ -15,10 +16,22 @@ typedef void(^ModuleHomeBlock)(NSInteger tag);
 @property (weak, nonatomic) IBOutlet UIImageView *peoImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *tltLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tltTopCont;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tltBtmCont;
+@property (weak, nonatomic) IBOutlet UIImageView *tltBtmImage;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contTopCont;
 @property (weak, nonatomic) IBOutlet UILabel *contLabel;
-@property (weak, nonatomic) IBOutlet UILabel *cont2Label;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yunyinTopCont;
 @property (weak, nonatomic) IBOutlet UIImageView *yuyinImage;
-@property (weak, nonatomic) IBOutlet UIView *cont2View;
+
+@property (weak, nonatomic) IBOutlet HRPicCollectionView *picView;
+@property (nonatomic, strong)NSMutableArray *picspathArr;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *picViewHit;
+
 @property (weak, nonatomic) IBOutlet UIView *videoView;
 @property (weak, nonatomic) IBOutlet UIButton *pl_btn;
 @property (weak, nonatomic) IBOutlet UIButton *hf_btn;

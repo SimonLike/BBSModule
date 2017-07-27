@@ -21,8 +21,7 @@ typedef NS_ENUM(NSUInteger, RequestMethod) {
 
 typedef NS_ENUM(NSUInteger, RequestType) {
     RequestTypeOrdinary,
-    RequestTypeImage,
-    RequestTypeVideo
+    RequestTypeImage
 };
 
 -(NSString *)jkurl; //请求的地址
@@ -36,8 +35,6 @@ typedef NS_ENUM(NSUInteger, RequestType) {
 - (void)initWithArgumentDictionary:(NSDictionary *)dict;
 
 
-//请求接口
+//请求
 - (NSURLSessionDataTask *)requestDataWithsuccess:(void(^)(NSURLSessionDataTask * task,id responseObject))success failure:(void(^)(NSURLSessionDataTask * task, NSError * error))failure;
-
-
 @end

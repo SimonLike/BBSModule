@@ -16,8 +16,8 @@
 }
 
 -(void)initWithCallMeObj:(GDCallMeObj *)obj{
-    self.contLabel.text = obj.content;
-    self.timeLabel.text = obj.create_time;;
+    self.contLabel.text = [NSString stringWithFormat:@"用户 %@ @ 了我一下",obj.name];
+    self.timeLabel.text = obj.createTime;;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

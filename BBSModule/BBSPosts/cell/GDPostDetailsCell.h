@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "GDCommentListObj.h"
 
+typedef void(^PostComBlock)(NSInteger tag);
+
 @interface GDPostDetailsCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *peoImage;
 @property (weak, nonatomic) IBOutlet UIView *moreBgView;
@@ -17,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *numLabel;
 @property (weak, nonatomic) IBOutlet UILabel *contLabel;
 @property (weak, nonatomic) IBOutlet UIButton *cz_btn;
+@property (copy, nonatomic) PostComBlock block;
 
 -(void)initWithCommentListObj:(GDCommentListObj *)obj;
 

@@ -99,13 +99,19 @@
 		F44C9DC81F0F712E0015106E /* GDArticleDetailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DC71F0F712E0015106E /* GDArticleDetailRequest.m */; };
 		F44C9DCB1F0F82EA0015106E /* GDCommentListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DCA1F0F82EA0015106E /* GDCommentListObj.m */; };
 		F44C9DCE1F0F9D420015106E /* GDDeleteArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DCD1F0F9D420015106E /* GDDeleteArticleRequest.m */; };
-		F44C9DD11F0F9D9D0015106E /* GDUpdateArticleequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F44C9DD01F0F9D9D0015106E /* GDUpdateArticleequest.m */; };
+		F458DA1B1F1F7D1D00BB55F0 /* GDCallFriendRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F458DA1A1F1F7D1D00BB55F0 /* GDCallFriendRequest.m */; };
 		F45A6E901F0650B900808731 /* GDSendPostVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45A6E8F1F0650B900808731 /* GDSendPostVC.m */; };
 		F45A6E931F0651E100808731 /* HRPicCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = F45A6E921F0651E100808731 /* HRPicCollectionView.m */; };
 		F45FAA4F1F05158500638211 /* GDRitView.m in Sources */ = {isa = PBXBuildFile; fileRef = F45FAA4E1F05158500638211 /* GDRitView.m */; };
 		F45FAA511F05158D00638211 /* GDRitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F45FAA501F05158D00638211 /* GDRitView.xib */; };
 		F45FAA591F051BC800638211 /* GDReplyToMyVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45FAA581F051BC800638211 /* GDReplyToMyVC.m */; };
 		F45FAA611F05210400638211 /* GDMyCommentsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F45FAA601F05210400638211 /* GDMyCommentsVC.m */; };
+		F464799E1F2362CA002AE575 /* GDUpdateArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F464799D1F2362CA002AE575 /* GDUpdateArticleRequest.m */; };
+		F464B1D81F1F6E420068541D /* GDCreateArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F464B1D71F1F6E420068541D /* GDCreateArticleRequest.m */; };
+		F466D0441F271BE2006EE896 /* GDCallFriendObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F466D0431F271BE2006EE896 /* GDCallFriendObj.m */; };
+		F466D04A1F274F7F006EE896 /* GDReplyDetailRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F466D0491F274F7F006EE896 /* GDReplyDetailRequest.m */; };
+		F466D04D1F27502D006EE896 /* GDReplyListObj.m in Sources */ = {isa = PBXBuildFile; fileRef = F466D04C1F27502D006EE896 /* GDReplyListObj.m */; };
+		F466D0501F2759C2006EE896 /* GDReplyToReplyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F466D04F1F2759C2006EE896 /* GDReplyToReplyRequest.m */; };
 		F46750DB1F0270E3008F93A6 /* GDModuleHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F46750DA1F0270E3008F93A6 /* GDModuleHomeVC.m */; };
 		F46D88601F0A4CAD00B68E28 /* GDPostDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F46D885F1F0A4CAD00B68E28 /* GDPostDetailsVC.m */; };
 		F46D88671F0A584F00B68E28 /* GDPostDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F46D88651F0A584F00B68E28 /* GDPostDetailsCell.m */; };
@@ -114,6 +120,8 @@
 		F46D886F1F0A6B1300B68E28 /* GDReplyDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F46D886D1F0A6B1300B68E28 /* GDReplyDetailsCell.m */; };
 		F46D88701F0A6B1300B68E28 /* GDReplyDetailsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F46D886E1F0A6B1300B68E28 /* GDReplyDetailsCell.xib */; };
 		F46FA07E1F13990A001E900A /* GDGetEditArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F46FA07D1F13990A001E900A /* GDGetEditArticleRequest.m */; };
+		F471735A1F258E1200DB915B /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = F47173591F258E1200DB915B /* server.cer */; };
+		F471735C1F25D73400DB915B /* tomcat.cer in Resources */ = {isa = PBXBuildFile; fileRef = F471735B1F25D73400DB915B /* tomcat.cer */; };
 		F4D887731F066065006CE493 /* sg_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D887651F066065006CE493 /* sg_normal@2x.png */; };
 		F4D887741F066065006CE493 /* sg_seleted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D887661F066065006CE493 /* sg_seleted@2x.png */; };
 		F4D887751F066065006CE493 /* SGAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D887681F066065006CE493 /* SGAssetModel.m */; };
@@ -362,8 +370,8 @@
 		F44C9DCA1F0F82EA0015106E /* GDCommentListObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDCommentListObj.m; sourceTree = "<group>"; };
 		F44C9DCC1F0F9D420015106E /* GDDeleteArticleRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDDeleteArticleRequest.h; sourceTree = "<group>"; };
 		F44C9DCD1F0F9D420015106E /* GDDeleteArticleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDDeleteArticleRequest.m; sourceTree = "<group>"; };
-		F44C9DCF1F0F9D9D0015106E /* GDUpdateArticleequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDUpdateArticleequest.h; sourceTree = "<group>"; };
-		F44C9DD01F0F9D9D0015106E /* GDUpdateArticleequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDUpdateArticleequest.m; sourceTree = "<group>"; };
+		F458DA191F1F7D1D00BB55F0 /* GDCallFriendRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDCallFriendRequest.h; sourceTree = "<group>"; };
+		F458DA1A1F1F7D1D00BB55F0 /* GDCallFriendRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDCallFriendRequest.m; sourceTree = "<group>"; };
 		F45A6E8E1F0650B900808731 /* GDSendPostVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDSendPostVC.h; sourceTree = "<group>"; };
 		F45A6E8F1F0650B900808731 /* GDSendPostVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDSendPostVC.m; sourceTree = "<group>"; };
 		F45A6E911F0651E100808731 /* HRPicCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRPicCollectionView.h; sourceTree = "<group>"; };
@@ -375,6 +383,18 @@
 		F45FAA581F051BC800638211 /* GDReplyToMyVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyToMyVC.m; sourceTree = "<group>"; };
 		F45FAA5F1F05210400638211 /* GDMyCommentsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDMyCommentsVC.h; sourceTree = "<group>"; };
 		F45FAA601F05210400638211 /* GDMyCommentsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDMyCommentsVC.m; sourceTree = "<group>"; };
+		F464799C1F2362CA002AE575 /* GDUpdateArticleRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDUpdateArticleRequest.h; sourceTree = "<group>"; };
+		F464799D1F2362CA002AE575 /* GDUpdateArticleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDUpdateArticleRequest.m; sourceTree = "<group>"; };
+		F464B1D61F1F6E420068541D /* GDCreateArticleRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDCreateArticleRequest.h; sourceTree = "<group>"; };
+		F464B1D71F1F6E420068541D /* GDCreateArticleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDCreateArticleRequest.m; sourceTree = "<group>"; };
+		F466D0421F271BE2006EE896 /* GDCallFriendObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDCallFriendObj.h; sourceTree = "<group>"; };
+		F466D0431F271BE2006EE896 /* GDCallFriendObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDCallFriendObj.m; sourceTree = "<group>"; };
+		F466D0481F274F7F006EE896 /* GDReplyDetailRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDReplyDetailRequest.h; sourceTree = "<group>"; };
+		F466D0491F274F7F006EE896 /* GDReplyDetailRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyDetailRequest.m; sourceTree = "<group>"; };
+		F466D04B1F27502D006EE896 /* GDReplyListObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDReplyListObj.h; sourceTree = "<group>"; };
+		F466D04C1F27502D006EE896 /* GDReplyListObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyListObj.m; sourceTree = "<group>"; };
+		F466D04E1F2759C2006EE896 /* GDReplyToReplyRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDReplyToReplyRequest.h; sourceTree = "<group>"; };
+		F466D04F1F2759C2006EE896 /* GDReplyToReplyRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDReplyToReplyRequest.m; sourceTree = "<group>"; };
 		F46750D91F0270E3008F93A6 /* GDModuleHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDModuleHomeVC.h; sourceTree = "<group>"; };
 		F46750DA1F0270E3008F93A6 /* GDModuleHomeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDModuleHomeVC.m; sourceTree = "<group>"; };
 		F46D885E1F0A4CAD00B68E28 /* GDPostDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDPostDetailsVC.h; sourceTree = "<group>"; };
@@ -389,6 +409,8 @@
 		F46D886E1F0A6B1300B68E28 /* GDReplyDetailsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GDReplyDetailsCell.xib; sourceTree = "<group>"; };
 		F46FA07C1F13990A001E900A /* GDGetEditArticleRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDGetEditArticleRequest.h; sourceTree = "<group>"; };
 		F46FA07D1F13990A001E900A /* GDGetEditArticleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDGetEditArticleRequest.m; sourceTree = "<group>"; };
+		F47173591F258E1200DB915B /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = "<group>"; };
+		F471735B1F25D73400DB915B /* tomcat.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tomcat.cer; sourceTree = "<group>"; };
 		F4A0E9621F03C36500803A38 /* GDModule.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDModule.pch; sourceTree = "<group>"; };
 		F4D887651F066065006CE493 /* sg_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sg_normal@2x.png"; sourceTree = "<group>"; };
 		F4D887661F066065006CE493 /* sg_seleted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sg_seleted@2x.png"; sourceTree = "<group>"; };
@@ -524,8 +546,8 @@
 				F44C9DC71F0F712E0015106E /* GDArticleDetailRequest.m */,
 				F44C9DCC1F0F9D420015106E /* GDDeleteArticleRequest.h */,
 				F44C9DCD1F0F9D420015106E /* GDDeleteArticleRequest.m */,
-				F44C9DCF1F0F9D9D0015106E /* GDUpdateArticleequest.h */,
-				F44C9DD01F0F9D9D0015106E /* GDUpdateArticleequest.m */,
+				F464799C1F2362CA002AE575 /* GDUpdateArticleRequest.h */,
+				F464799D1F2362CA002AE575 /* GDUpdateArticleRequest.m */,
 				F40D6D511F121076003E58F6 /* GDCallMeRequest.h */,
 				F40D6D521F121076003E58F6 /* GDCallMeRequest.m */,
 				F40D6D571F121B34003E58F6 /* GDDeleteCallMeRequest.h */,
@@ -546,6 +568,14 @@
 				F40935E11F179DB700974AE8 /* GDReplyMeRequest.m */,
 				F40935E61F179E9A00974AE8 /* GDDeleteReplyMeRequest.h */,
 				F40935E71F179E9A00974AE8 /* GDDeleteReplyMeRequest.m */,
+				F464B1D61F1F6E420068541D /* GDCreateArticleRequest.h */,
+				F464B1D71F1F6E420068541D /* GDCreateArticleRequest.m */,
+				F458DA191F1F7D1D00BB55F0 /* GDCallFriendRequest.h */,
+				F458DA1A1F1F7D1D00BB55F0 /* GDCallFriendRequest.m */,
+				F466D0481F274F7F006EE896 /* GDReplyDetailRequest.h */,
+				F466D0491F274F7F006EE896 /* GDReplyDetailRequest.m */,
+				F466D04E1F2759C2006EE896 /* GDReplyToReplyRequest.h */,
+				F466D04F1F2759C2006EE896 /* GDReplyToReplyRequest.m */,
 			);
 			path = request;
 			sourceTree = "<group>";
@@ -584,6 +614,10 @@
 				F40D6D5E1F121EDA003E58F6 /* GDMyArticleListObj.m */,
 				F40935E31F179E2800974AE8 /* GDReplyMeObj.h */,
 				F40935E41F179E2800974AE8 /* GDReplyMeObj.m */,
+				F466D0421F271BE2006EE896 /* GDCallFriendObj.h */,
+				F466D0431F271BE2006EE896 /* GDCallFriendObj.m */,
+				F466D04B1F27502D006EE896 /* GDReplyListObj.h */,
+				F466D04C1F27502D006EE896 /* GDReplyListObj.m */,
 			);
 			path = Obj;
 			sourceTree = "<group>";
@@ -812,9 +846,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F464799F1F236D16002AE575 /* video */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
 		F4D887631F066065006CE493 /* Third */ = {
 			isa = PBXGroup;
 			children = (
+				F464799F1F236D16002AE575 /* video */,
 				F42913ED1F0E529E0000D09A /* RecordVideo */,
 				F42913AD1F0E4EE70000D09A /* MJRefresh */,
 				F42913791F0E4BEE0000D09A /* SDWebImage */,
@@ -925,6 +967,8 @@
 		F4ECBA381F012292001F3FC9 /* BBSModule */ = {
 			isa = PBXGroup;
 			children = (
+				F47173591F258E1200DB915B /* server.cer */,
+				F471735B1F25D73400DB915B /* tomcat.cer */,
 				F4D887631F066065006CE493 /* Third */,
 				F4ECBA6F1F01236C001F3FC9 /* BBSPosts */,
 				F4ECBA3C1F012292001F3FC9 /* AppDelegate.h */,
@@ -1140,6 +1184,7 @@
 			files = (
 				F4D8879A1F06646F006CE493 /* GDMyCommentsCell.xib in Resources */,
 				F46D88681F0A584F00B68E28 /* GDPostDetailsCell.xib in Resources */,
+				F471735C1F25D73400DB915B /* tomcat.cer in Resources */,
 				F4D887A01F06646F006CE493 /* PicCollectionViewCell.xib in Resources */,
 				F4ECBA4C1F012292001F3FC9 /* LaunchScreen.storyboard in Resources */,
 				F4D8879E1F06646F006CE493 /* GDRitCell.xib in Resources */,
@@ -1155,6 +1200,7 @@
 				F4D887B31F066899006CE493 /* GDMyPostsCell.xib in Resources */,
 				F45FAA511F05158D00638211 /* GDRitView.xib in Resources */,
 				F4D8879C1F06646F006CE493 /* GDReplyToMyCell.xib in Resources */,
+				F471735A1F258E1200DB915B /* server.cer in Resources */,
 				F4D887801F066073006CE493 /* SVProgressHUD.bundle in Resources */,
 				F42913E81F0E4EE70000D09A /* MJRefresh.bundle in Resources */,
 				F4ECBA731F01239D001F3FC9 /* BBSPosts.storyboard in Resources */,
@@ -1188,6 +1234,7 @@
 				F41576211F0CB3120054BD36 /* AFURLSessionManager.m in Sources */,
 				F42913E61F0E4EE70000D09A /* MJRefreshNormalHeader.m in Sources */,
 				F42913511F0E3B7A0000D09A /* GDArticleListRequest.m in Sources */,
+				F458DA1B1F1F7D1D00BB55F0 /* GDCallFriendRequest.m in Sources */,
 				F42913EB1F0E4EE70000D09A /* UIScrollView+MJRefresh.m in Sources */,
 				F4D887751F066065006CE493 /* SGAssetModel.m in Sources */,
 				F40D6D531F121076003E58F6 /* GDCallMeRequest.m in Sources */,
@@ -1205,7 +1252,6 @@
 				F42913A21F0E4BEE0000D09A /* UIImageView+HighlightedWebCache.m in Sources */,
 				F42913E21F0E4EE70000D09A /* MJRefreshBackGifFooter.m in Sources */,
 				F429139E1F0E4BEE0000D09A /* SDWebImagePrefetcher.m in Sources */,
-				F44C9DD11F0F9D9D0015106E /* GDUpdateArticleequest.m in Sources */,
 				F42913F81F0E587B0000D09A /* GDRecordVideoVC.m in Sources */,
 				F4D8877A1F066065006CE493 /* SGPhotoBrowser.m in Sources */,
 				F415763E1F0CB3E60054BD36 /* UIView+Extend.m in Sources */,
@@ -1221,7 +1267,9 @@
 				F42913DF1F0E4EE70000D09A /* MJRefreshAutoGifFooter.m in Sources */,
 				F42913A31F0E4BEE0000D09A /* UIImageView+WebCache.m in Sources */,
 				F4D887811F066073006CE493 /* SVProgressHUD.m in Sources */,
+				F466D0501F2759C2006EE896 /* GDReplyToReplyRequest.m in Sources */,
 				F4D887951F06646F006CE493 /* GD_MyselfCell.m in Sources */,
+				F466D0441F271BE2006EE896 /* GDCallFriendObj.m in Sources */,
 				F42913731F0E4A5A0000D09A /* MJMethod.m in Sources */,
 				F40D6D3B1F0405BE003E58F6 /* GD_MyselfVC.m in Sources */,
 				F42913EC1F0E4EE70000D09A /* UIView+MJExtension.m in Sources */,
@@ -1250,6 +1298,7 @@
 				F45FAA4F1F05158500638211 /* GDRitView.m in Sources */,
 				F4D887B21F066899006CE493 /* GDMyPostsCell.m in Sources */,
 				F40935DC1F178EE500974AE8 /* GDDeleteMyCommentRequest.m in Sources */,
+				F466D04D1F27502D006EE896 /* GDReplyListObj.m in Sources */,
 				F40935E21F179DB700974AE8 /* GDReplyMeRequest.m in Sources */,
 				F42913741F0E4A5A0000D09A /* MJType.m in Sources */,
 				F42913A91F0E4CFA0000D09A /* BaseViewController.m in Sources */,
@@ -1261,8 +1310,10 @@
 				F415763A1F0CB3E60054BD36 /* NSMutableDictionary+Extend.m in Sources */,
 				F42913E91F0E4EE70000D09A /* MJRefreshConst.m in Sources */,
 				F4D887B91F06708C006CE493 /* GDClearCacheCell.m in Sources */,
+				F464799E1F2362CA002AE575 /* GDUpdateArticleRequest.m in Sources */,
 				F40935D01F177BEA00974AE8 /* GDQuickReplyArticleRequest.m in Sources */,
 				F429139D1F0E4BEE0000D09A /* SDWebImageManager.m in Sources */,
+				F466D04A1F274F7F006EE896 /* GDReplyDetailRequest.m in Sources */,
 				F41576271F0CB36A0054BD36 /* CCSessionManager.m in Sources */,
 				F429139C1F0E4BEE0000D09A /* SDWebImageDownloaderOperation.m in Sources */,
 				F4ECBA3B1F012292001F3FC9 /* main.m in Sources */,
@@ -1305,6 +1356,7 @@
 				F415763D1F0CB3E60054BD36 /* UIImage+Extend.m in Sources */,
 				F42913AC1F0E4E900000D09A /* GDUtils.m in Sources */,
 				F40935EB1F17A1FF00974AE8 /* AttributeUILabel.m in Sources */,
+				F464B1D81F1F6E420068541D /* GDCreateArticleRequest.m in Sources */,
 				F40D6D481F06A963003E58F6 /* GDChooseFriendVC.m in Sources */,
 				F40D6D431F053D4F003E58F6 /* GDTextAlertView.m in Sources */,
 				F46FA07E1F13990A001E900A /* GDGetEditArticleRequest.m in Sources */,

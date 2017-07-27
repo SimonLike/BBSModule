@@ -17,8 +17,10 @@
         
         NSMutableDictionary *requestDict = [[NSMutableDictionary alloc] init];
         [requestDict setObject:@([GDUtils readUser].userId) forKey:@"userId"];
-        [requestDict setObject:@(page) forKey:@"articleId"];
-        [requestDict setObject:@(rows) forKey:@"commentId"];
+        [requestDict setObject:[GDUtils readUser].token forKey:@"token"];
+
+        [requestDict setObject:@(page) forKey:@"page"];
+        [requestDict setObject:@(rows) forKey:@"rows"];
         
         [super initWithArgumentDictionary:requestDict];
     }

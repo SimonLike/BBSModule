@@ -20,6 +20,9 @@
 #import "WCLRecordEngine.h"
 #import "GDTextAlertView.h"
 #import "GDGetEditArticleRequest.h"
+#import "GDCreateArticleRequest.h"
+#import "GDUpdateArticleRequest.h"
+#import "GDCallFriendObj.h"
 
 #import "GDChooseFriendVC.h"
 
@@ -60,12 +63,16 @@
 
 @property (nonatomic, strong) AVAudioRecorder *audioRecorder;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
-@property (nonatomic, strong) NSURL *fileURL;
+@property (nonatomic, strong) NSURL *fileURL; //录音url
 @property (strong, nonatomic) UIImagePickerController *imagePicker;//视频选择器  相册相机
 @property (strong, nonatomic) MPMoviePlayerViewController *playerVC;
 
 @property (strong, nonatomic) WCLRecordEngine         *recordEngine;
 @property (assign, nonatomic) UploadVieoStyle         videoStyle;//视频的类型
+
+@property (nonatomic, strong) NSString *fileAudio; //语音参数
+@property (nonatomic, strong) NSString *fileVideo; //视频参数
+@property (nonatomic, strong) NSArray *callArray; //@朋友参数
 
 @end
 
@@ -102,13 +109,30 @@
     [self addViewBlock];
     
     if ([_vcType isEqualToString:@"editPost"]) {
+        self.title = @"编辑帖子";
         GDGetEditArticleRequest *request = [[GDGetEditArticleRequest alloc] initWithArticleId:_articleId];
         [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
             if (responseObject) {
                 NSDictionary *dict = responseObject[@"data"];
                 _textView.text = dict[@"content"];
-                
-                
+                if (![dict[@"title"] isEqualToString:@""]) {
+                    _bti_text.text = dict[@"title"];
+                    [self showBiaoTiHidden:NO];
+                }
+                if (![dict[@"audio"] isEqualToString:@""]) {
+                    _fileURL = dict[@"audio"];
+                    [self showYuyinHidden:NO];
+                }
+                if (![dict[@"video"] isEqualToString:@""]) {
+                    [self showVideoHidden:NO];
+                }
+                if (![dict[@"image"] isEqualToString:@""]) {
+                    [self showPictureHidden:NO];
+                    NSArray *array = [dict[@"image"] componentsSeparatedByString:@";"];
+
+                    [self.picspathArr addObjectsFromArray:array];
+                    [self setConstant];
+                }
                 DLog(@"responseObject-->%@",responseObject);
             }
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -118,7 +142,255 @@
     
 }
 
+#pragma mark --add Block
 
+- (void)addViewBlock{
+    __weak typeof(self) ws = self;
+    
+    //添加照片
+    _picView.addPicBlock = ^{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
+        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            [ws pickImageFromCamera];
+            
+        }];
+        
+        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            SGImagePickerController *picker = [SGImagePickerController new];
+            //返回选择的缩略图
+            [picker setDidFinishSelectThumbnails:^(NSArray *thumbnails) {
+                NSLog(@"缩略图%@",thumbnails);
+                if (ws.picspathArr.count > 8) {
+                    [SVProgressHUD showImage:nil status:@"最多上传9张照片"];
+                    return ;
+                }
+                [ws uploadIma:thumbnails];
+            }];
+            [ws presentViewController:picker animated:YES completion:nil];
+        }];
+        UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:action1];
+        [alertController addAction:action2];
+        [alertController addAction:action3];
+        [ws presentViewController:alertController animated:YES completion:nil];
+    };
+    
+    //删除照片
+    _picView.delPicBlock = ^(NSInteger tag) {
+        [ws.picspathArr removeObjectAtIndex:tag];
+        [ws setConstant];
+    };
+    
+    //添加操作按钮View
+    _peratingPostView = [GDPeratingPostView initPeratingPostView];
+    _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 50);
+    _peratingPostView.layer.borderColor = RGBCOLOR16(0xeeeeee).CGColor;
+    _peratingPostView.layer.borderWidth = 1;
+    [self.view addSubview:_peratingPostView];
+    _peratingPostView.hidden = YES;
+    
+    //操作
+    _peratingPostView.ppBlock = ^(UIButton *btn,NSInteger tag) {
+        if (tag == 10) {//语音
+            if (!ws.picView.hidden || !ws.videoView.hidden) {
+                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
+                return ;
+            }
+            
+            if (ws.yuyinBtn.hidden) {
+                ws.peratingPostView.speakView.hidden = NO;
+                ws.peratingPostView.btnsView.hidden = YES;
+            }else{
+                [ws showYuyinHidden:YES];
+            }
+            
+        }else if (tag == 11){//@
+            GDChooseFriendVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDChooseFriend"];
+            [ws.navigationController pushViewController:vc animated:YES];
+            vc.callblock = ^(NSArray *array) {
+                [ws.navigationController popViewControllerAnimated:YES];
+                _callArray = array;
+            };
+        }else if (tag == 12){//图片
+            
+            if (!ws.yuyinBtn.hidden || !ws.videoView.hidden) {
+                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
+                return ;
+            }
+            if (ws.picView.hidden) {
+                [ws showPictureHidden:NO];
+            }else{
+                [ws showPictureHidden:YES];
+            }
+            
+        }else if (tag == 13){//视频
+            if (!ws.yuyinBtn.hidden || !ws.picView.hidden) {
+                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
+                return ;
+            }
+            if (ws.videoView.hidden) {
+            }else{
+                [ws showVideoHidden:YES];
+                return;
+            }
+            
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
+            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                
+                GDRecordVideoVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDRecordVideo"];
+                [ws.navigationController pushViewController:vc animated:YES];
+                
+                vc.recordBlock = ^(NSURL *url) {
+                    [ws.navigationController popViewControllerAnimated:YES];
+                    
+                    NSURL *newVideoUrl ; //一般.mp4
+                    NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
+                    [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
+                    newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/Documents/output-%@.mp4", [formater stringFromDate:[NSDate date]]]] ;//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
+                    
+                    [ws convertVideoQuailtyWithInputURL:url outputURL:newVideoUrl completeHandler:nil];
+                    
+                };
+                
+            }];
+            UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"本地视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                ws.videoStyle = VideoLocation;
+                [ws.recordEngine shutdown];
+                [ws presentViewController:ws.imagePicker animated:YES completion:nil];
+            }];
+            UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"视频链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                if (!ws.textAlertView) {
+                    ws.textAlertView = [GDTextAlertView initTextAlertView];
+                    ws.textAlertView.frame = ws.view.bounds;
+                    ws.textAlertView.bt_label.text = @"";
+                    ws.textAlertView.bt_topCont.constant = 0;
+                    [ws.view addSubview:ws.textAlertView];
+                }
+                ws.textAlertView.hidden = NO;
+                [ws.textAlertView.textView becomeFirstResponder];
+                ws.textAlertView.block = ^(NSInteger tag,NSString *text) {
+                    if (tag == 10) {//取消
+                        
+                    }else{//确定
+                        
+                    }
+                    ws.textAlertView.hidden = YES;
+                };
+                
+            }];
+            
+            UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+            [alertController addAction:action1];
+            [alertController addAction:action2];
+            [alertController addAction:action3];
+            [alertController addAction:action4];
+            [ws presentViewController:alertController animated:YES completion:nil];
+            
+        }else if (tag == 15){//标题
+            if (ws.bti_text.hidden) {
+                [ws showBiaoTiHidden:NO];
+            }else{
+                [ws showBiaoTiHidden:YES];
+                
+            }
+        }else if (tag == 16){//键盘
+            
+        }
+    };
+    _peratingPostView.speakBlock = ^(NSString *spkType) {
+        if ([spkType isEqualToString:@"start"]) {
+            [ws startRecord];
+        }else{
+            [ws stopRecord];
+            [ws showYuyinHidden:NO];
+        }
+    };
+}
+#pragma mark -- 发布
+- (IBAction)sendReleaseClick:(id)sender {
+    NSString *title = @"";
+    NSString *content = @"";
+    NSString *image = @"";
+    NSString *video = @"";
+    NSString *audio = @"";
+    NSString *call = @"";
+    
+    if (!self.bti_text.hidden) {
+        title = self.bti_text.text;
+        if ([title isEqualToString:@""]) {
+            [SVProgressHUD showImage:nil status:@"请输入标题"];
+            return;
+        }
+    }
+    content = self.textView.text;
+    if ([content isEqualToString:@"请输入你要发布的内容"]||[content isEqualToString:@""]) {
+        content = @"";
+    }
+    
+    if (!self.yuyinBtn.hidden) {
+        audio =  _fileAudio;
+    }
+    
+    if (!self.videoView.hidden) {
+        video =  _fileVideo;
+    }
+    if (!self.picView.hidden) {
+        //上传图片拼接串
+        for (int i = 0; i < self.picspathArr.count; i++) {
+            if (i == self.picspathArr.count - 1) {
+                image = [image stringByAppendingString:[NSString stringWithFormat:@"%@",self.picspathArr[i]]];
+            }else{
+                image = [image stringByAppendingString:[NSString stringWithFormat:@"%@;",self.picspathArr[i]]];
+            }
+        }
+    }
+    
+    if (_callArray.count > 0) {
+        //拼接串
+        for (int i = 0; i < _callArray.count; i++) {
+            if (i == _callArray.count - 1) {
+                call = [call stringByAppendingString:[NSString stringWithFormat:@"%ld",(long)[(GDCallFriendObj*)_callArray[i] callId]]];
+            }else{
+                call = [call stringByAppendingString:[NSString stringWithFormat:@"%ld;",(long)[(GDCallFriendObj*)_callArray[i] callId]]];
+            }
+        }
+    }
+    
+    if ([_vcType isEqualToString:@"editPost"]) {
+        GDUpdateArticleRequest *request = [[GDUpdateArticleRequest alloc] initWithArticleId:_articleId
+                                                                                      Title:title
+                                                                                    Content:self.textView.text
+                                                                                      Image:image
+                                                                                      Video:video
+                                                                                      Audio:audio
+                                                                                       Call:call];
+        
+        [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
+            if (responseObject) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+        }];
+    }else{
+        GDCreateArticleRequest *request = [[GDCreateArticleRequest alloc] initWithTitle:title
+                                                                                Content:self.textView.text
+                                                                                  Image:image
+                                                                                  Video:video
+                                                                                  Audio:audio
+                                                                                   Call:call];
+        [request requestDataWithsuccess:^(NSURLSessionDataTask *task, id responseObject) {
+            if (responseObject) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        } failure:^(NSURLSessionDataTask *task, NSError *error) {
+            
+        }];
+    }
+}
+
+#pragma mark -- 标题 语音 图片 视频操作
 //标题
 -(void)showBiaoTiHidden:(BOOL)state{
     
@@ -160,7 +432,7 @@
     }else{
         self.pic_ts_label.text = @"你还可以上传8张";
         self.pic_topcont.constant = 15;
-        self.picViewHit.constant =  (self.picView.frame.size.width - 40)/4 + 10;
+        self.picViewHit.constant =  (self.picView.frame.size.width - 30)/3 + 10;
         self.picView.hidden = NO;
         CGRect frame = self.picView.pic_collection.frame;
         frame.size.height = self.picViewHit.constant;
@@ -182,173 +454,43 @@
         self.fbbtn_topcont.constant = 30;
         self.videoView.hidden = NO;
         [_peratingPostView.video_btn setImage:[UIImage imageNamed:@"module_selectedvideobtn"] forState:UIControlStateNormal];
-
     }
 
 }
 
+#pragma mark -- 语音
 
-- (void)addViewBlock{
-    __weak typeof(self) ws = self;
-
-    //添加照片
-    _picView.addPicBlock = ^{
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
-        UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            
-            [ws pickImageFromCamera];
-            
-        }];
-        
-        UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            SGImagePickerController *picker = [SGImagePickerController new];
-            //返回选择的缩略图
-            [picker setDidFinishSelectThumbnails:^(NSArray *thumbnails) {
-                NSLog(@"缩略图%@",thumbnails);
-                if (ws.picspathArr.count > 8) {
-                    [SVProgressHUD showImage:nil status:@"最多上传9张照片"];
-                    return ;
-                }
-                [ws.picspathArr addObjectsFromArray:thumbnails];
-                if (self.picspathArr.count>0) {
-                    [ws setConstant];
-                }
-                [ws uploadIma:thumbnails];
-            }];
-            [ws presentViewController:picker animated:YES completion:nil];
-        }];
-        UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
-        [alertController addAction:action1];
-        [alertController addAction:action2];
-        [alertController addAction:action3];
-        [ws presentViewController:alertController animated:YES completion:nil];
-    };
-    
-    //删除照片
-    _picView.delPicBlock = ^(NSInteger tag) {
-        [ws.picspathArr removeObjectAtIndex:tag];
-        [ws setConstant];
-    };
-   
-    //添加操作按钮View
-    _peratingPostView = [GDPeratingPostView initPeratingPostView];
-    _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 50);
-    _peratingPostView.layer.borderColor = RGBCOLOR16(0xeeeeee).CGColor;
-    _peratingPostView.layer.borderWidth = 1;
-    [self.view addSubview:_peratingPostView];
-    _peratingPostView.hidden = YES;
-    
-    //操作
-    _peratingPostView.ppBlock = ^(UIButton *btn,NSInteger tag) {
-        if (tag == 10) {//语音
-            if (!ws.picView.hidden || !ws.videoView.hidden) {
-                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
-                return ;
-            }
-            
-            if (ws.yuyinBtn.hidden) {
-                ws.peratingPostView.speakView.hidden = NO;
-                ws.peratingPostView.btnsView.hidden = YES;
-            }else{
-                [ws showYuyinHidden:YES];
-            }
-            
-        }else if (tag == 11){//@
-            GDChooseFriendVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDChooseFriend"];
-            [ws.navigationController pushViewController:vc animated:YES];
-        }else if (tag == 12){//图片
-            
-            if (!ws.yuyinBtn.hidden || !ws.videoView.hidden) {
-                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
-                return ;
-            }
-            if (ws.picView.hidden) {
-                [ws showPictureHidden:NO];
-            }else{
-                [ws showPictureHidden:YES];
-            }
-            
-        }else if (tag == 13){//视频
-            if (!ws.yuyinBtn.hidden || !ws.picView.hidden) {
-                [SVProgressHUD showImage:nil status:@"语音，图片，视频只能选择一种发帖！"];
-                return ;
-            }
-            
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle: UIAlertControllerStyleActionSheet];
-            UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"拍摄视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-               
-                
-                GDRecordVideoVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDRecordVideo"];
-                [ws.navigationController pushViewController:vc animated:YES];
-                
-                vc.recordBlock = ^(NSURL *url) {
-                    [ws.navigationController popViewControllerAnimated:YES];
-
-                    NSURL *newVideoUrl ; //一般.mp4
-                    NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
-                    [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
-                    newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/Documents/output-%@.mp4", [formater stringFromDate:[NSDate date]]]] ;//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
-                    
-                    [ws convertVideoQuailtyWithInputURL:url outputURL:newVideoUrl completeHandler:nil];
-                    
-                };
-                
-            }];
-            UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"本地视频" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                ws.videoStyle = VideoLocation;
-                [ws.recordEngine shutdown];
-                [ws presentViewController:ws.imagePicker animated:YES completion:nil];
-            }];
-            UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"视频链接" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                if (!ws.textAlertView) {
-                    ws.textAlertView = [GDTextAlertView initTextAlertView];
-                    ws.textAlertView.frame = ws.view.bounds;
-                    ws.textAlertView.bt_label.text = @"";
-                    ws.textAlertView.bt_topCont.constant = 0;
-                    [ws.view addSubview:ws.textAlertView];
-                }
-                ws.textAlertView.hidden = NO;
-                [ws.textAlertView.textView becomeFirstResponder];
-                ws.textAlertView.block = ^(NSInteger tag,NSString *text) {
-                    if (tag == 10) {//取消
-                        
-                    }else{//确定
-                    
-                    }
-                    ws.textAlertView.hidden = YES;
-                };
-                
-            }];
-            
-            UIAlertAction *action4 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
-            [alertController addAction:action1];
-            [alertController addAction:action2];
-            [alertController addAction:action3];
-            [alertController addAction:action4];
-            [ws presentViewController:alertController animated:YES completion:nil];
-            
-        }else if (tag == 15){//标题
-            if (ws.bti_text.hidden) {
-                [ws showBiaoTiHidden:NO];
-            }else{
-                [ws showBiaoTiHidden:YES];
-
-            }
-        }else if (tag == 16){//键盘
-            
-        }
-    };
-    _peratingPostView.speakBlock = ^(NSString *spkType) {
-        if ([spkType isEqualToString:@"start"]) {
-            [ws startRecord];
-        }else{
-            [ws stopRecord];
-            [ws showYuyinHidden:NO];
-        }
-    };
-}
 - (IBAction)yuyinClick:(id)sender {
     [self playRecord];
+}
+
+//开始录音
+-(void)startRecord{
+    //    初始化设置音频会话
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError *sessionError;
+    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+    if(session == nil){
+    }
+    else {
+        [session setActive:YES error:nil];
+    }
+    
+    if (_audioFilePath.length > 0) {
+        NSError *error = nil;
+        [[NSFileManager defaultManager] removeItemAtPath:_audioFilePath error:&error];
+    }
+    
+    if (![self.audioRecorder isRecording]) {
+        [self.audioRecorder prepareToRecord];
+        //首次使用应用时如果调用record方法会询问用户是否允许使用麦克风
+        [self.audioRecorder record];
+    }
+}
+-(void)stopRecord{
+    
+    [self.audioRecorder stop];
+    [self uploadAudio:_fileURL];
 }
 
 //获取录音文件设置
@@ -370,8 +512,7 @@
 //获取文件名:由时间+后缀组成
 - (NSString *)getSavePathWithFileSuffix:(NSString *)suffix
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentPath = [paths objectAtIndex:0];
+    NSString *documentPath  = [NSString stringWithFormat:@"%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]];
     
     NSDate *date = [NSDate date];
     //获取当前时间
@@ -380,9 +521,10 @@
     NSString *curretDateAndTime = [dateFormat stringFromDate:date];
     //命名文件
     NSString *fileName = [NSString stringWithFormat:@"%@.%@",curretDateAndTime,suffix];
-    //指定文件存储路径
-    NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
     
+    //指定文件存储路径
+    NSString *filePath = [documentPath stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@",fileName]];
+     DLog(@"yuyinfilePath--->%@",filePath);
     return filePath;
 }
 
@@ -405,54 +547,11 @@
     }
     return _audioRecorder;
 }
-- (IBAction)playVideo:(id)sender {
-    self.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:_videoFilePath];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[self.playerVC moviePlayer]];
-    [[self.playerVC moviePlayer] prepareToPlay];
-    
-    [self presentMoviePlayerViewControllerAnimated:self.playerVC];
-    [[self.playerVC moviePlayer] play];
-}
 
-//当点击Done按键或者播放完毕时调用此函数
-- (void) playVideoFinished:(NSNotification *)theNotification {
-    MPMoviePlayerController *player = [theNotification object];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:player];
-    [player stop];
-    [self.playerVC dismissMoviePlayerViewControllerAnimated];
-    self.playerVC = nil;
-}
-//开始录音
--(void)startRecord{
-    //    初始化设置音频会话
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    NSError *sessionError;
-    [session setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
-    if(session == nil){
-    }
-    else {
-        [session setActive:YES error:nil];
-    }
 
-    
-    if (_audioFilePath.length > 0) {
-        NSError *error = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:_audioFilePath error:&error];
-    }
-    if (![self.audioRecorder isRecording]) {
-        [self.audioRecorder prepareToRecord];
-        //首次使用应用时如果调用record方法会询问用户是否允许使用麦克风
-        [self.audioRecorder record];
-    }
-}
--(void)stopRecord{
-    
-    [self.audioRecorder stop];
-
-}
 //播放本地音频文件的触发时间,可以添加按钮或其他来触发播放
 -(void)playRecord{
-    NSLog(@"_fileURL-->%@",_fileURL);
+    NSLog(@"_fileURLsss-->%@",_fileURL);
     //初始化播放器的时候如下设置
     UInt32 sessionCategory = kAudioSessionCategory_MediaPlayback;
     AudioSessionSetProperty(kAudioSessionProperty_AudioCategory,
@@ -507,6 +606,27 @@
     [self suspendRecord];
 }
 
+#pragma mark --视频
+
+- (IBAction)playVideo:(id)sender {
+    self.playerVC = [[MPMoviePlayerViewController alloc] initWithContentURL:_videoFilePath];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[self.playerVC moviePlayer]];
+    [[self.playerVC moviePlayer] prepareToPlay];
+    
+    [self presentMoviePlayerViewControllerAnimated:self.playerVC];
+    [[self.playerVC moviePlayer] play];
+}
+
+//当点击Done按键或者播放完毕时调用此函数
+- (void) playVideoFinished:(NSNotification *)theNotification {
+    MPMoviePlayerController *players = [theNotification object];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:players];
+    [players stop];
+    [self.playerVC dismissMoviePlayerViewControllerAnimated];
+    self.playerVC = nil;
+}
+#pragma mark --图片
+
 - (UIImagePickerController *)imagePicker {
     if (_imagePicker == nil) {
         _imagePicker = [[UIImagePickerController alloc] init];
@@ -542,34 +662,7 @@
     //当选择的类型是图片
     if ([type isEqualToString:@"public.image"])
     {
-        //先把图片转成NSData
-        UIImage* image = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-        NSData *data;
-        data = UIImageJPEGRepresentation(image, 0.5);
-        
-        //图片保存的路径
-        [[NSFileManager defaultManager] createDirectoryAtPath:[NSString stringWithFormat:@"%@/Documents/SendPostTempImage", NSHomeDirectory()] withIntermediateDirectories:YES attributes:nil error:nil];
-        //这里将图片放在沙盒的documents文件夹中
-        NSString * DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/SendPostTempImage"];
-        
-        //文件管理器
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        
-        //把刚刚图片转换的data对象拷贝至沙盒中 并保存为png
-        [fileManager createDirectoryAtPath:DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
-//        NSString *fileName = [BGHelper random32bitString];
-//        [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:[NSString stringWithFormat:@"/%@.png",fileName]] contents:data attributes:nil];
-        
-        //得到选择后沙盒中图片的完整路径
-//        NSString *filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath, [NSString stringWithFormat:@"/%@.png",fileName]];
-        //if([self.photoType isEqualToString:@"0"])
-        //    [self uploadUserBgIMG];
-        //else
-        
-        //关闭相册界面
-        [picker dismissViewControllerAnimated:YES completion:^{
-            
-        }];
+      
     }else if ([type isEqualToString:(NSString*)kUTTypeMovie]) {//视频
         
         [picker dismissViewControllerAnimated:YES completion:^{
@@ -578,8 +671,21 @@
             NSURL *newVideoUrl ; //一般.mp4
             NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
             [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
-            newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/Documents/output-%@.mp4", [formater stringFromDate:[NSDate date]]]] ;//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
+           
+//            NSString *documentPath  = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+            
+            NSString *documentPath  = [NSString stringWithFormat:@"%@",[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject]];
+
+            
+            newVideoUrl = [NSURL fileURLWithPath:[documentPath stringByAppendingFormat:@"/output-%@.mp4", [formater stringFromDate:[NSDate date]]]] ;//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
+
+//            //指定文件存储路径
+//            [documentPath writeToFile:[documentPath stringByAppendingFormat:@"/output-%@.mp4", [formater stringFromDate:[NSDate date]]] atomically:YES encoding:NSUTF8StringEncoding error:nil];
+            
             [picker dismissViewControllerAnimated:YES completion:nil];
+            
+            DLog(@"shipinfilePath--->%@",newVideoUrl);
+
             [self convertVideoQuailtyWithInputURL:sourceURL outputURL:newVideoUrl completeHandler:nil];
             
         }];
@@ -603,28 +709,59 @@
     }
 
 }
-
+#pragma mark --upload 上传
+//图片
 -(void)uploadIma:(NSArray *)pics{
     for (UIImage *img in pics) {
         long long num = [GDUtils getLongNumFromDate:[NSDate date]];
         NSString* code = [GDUtils ret32bitString];
         // 上传图片
-        //        NSDictionary *dict = @{@"mem_id":@"600209"};
+        NSDictionary *dict = @{@"token":[GDUtils readUser].token,@"userId":@([GDUtils readUser].userId)};
         NSData *fileData = UIImageJPEGRepresentation(img, 0.5);
         NSString *fileName = [NSString stringWithFormat:@"%@-%lld-%@.png",[GDUtils readUser].token,num,code];//命名，必须唯一
         
-        [AFUploadFile upLoadToUrlString:@"http://139.196.41.31:8080/GDLT/appservice/basicController/uploadPicture" parameters:nil fileData:fileData name:@"file" fileName:fileName mimeType:@"image/jpeg" response:JSON progress:^(NSProgress *uploadProgress) {
+        [AFUploadFile upLoadToUrlString:[NSString stringWithFormat:@"%@/appservice/basicController/uploadPicture",PIC_UPDATE] parameters:dict fileData:fileData name:@"file" fileName:fileName mimeType:@"image/jpeg" response:JSON progress:^(NSProgress *uploadProgress) {
             
         } success:^(NSURLSessionDataTask *task, id responseObject) {
             NSLog(@"success:%@ %@",responseObject, [responseObject objectForKey:@"msg"]);
+            if(responseObject){
+                NSString *url = responseObject[@"data"][@"path"];
+                [self.picspathArr addObject:url];
+                _pic_ts_label.text = [NSString stringWithFormat:@"你还可以上传%lu张",9 - self.picspathArr.count];
+                if (self.picspathArr.count>0) {
+                    [self setConstant];
+                }
+            }
+           
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
-            NSLog(@"%@",error);
         }];
     }
 }
+//音频
+-(void)uploadAudio:(NSURL *)url{
+    DLog(@"url --->%@",url);
+    NSData *audioData = [NSData dataWithContentsOfURL:url];    //上传
+
+    long long num = [GDUtils getLongNumFromDate:[NSDate date]];
+    NSString* code = [GDUtils ret32bitString];
+    NSString *fileName = [NSString stringWithFormat:@"%@-%lld-%@.caf",[GDUtils readUser].token,num,code];
+    NSDictionary *dict = @{@"token":[GDUtils readUser].token,@"userId":@([GDUtils readUser].userId)};
+    
+    [AFUploadFile upLoadToUrlString:[NSString stringWithFormat:@"%@/appservice/basicController/uploadFile",PIC_UPDATE] parameters:dict fileData:audioData name:@"file" fileName:fileName mimeType:@"application/octet-stream" response:JSON progress:^(NSProgress *uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask *task, id responseObject) {
+         NSLog(@"yinpin上传成功%@",responseObject);
+        if (responseObject) {
+            _fileAudio = responseObject[@"data"][@"path"];
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+        NSLog(@"%@",error);
+        
+    }];
+}
+//视频
 -(void)uploadVideo:(NSURL *)url{
-    // 如果是视频
- 
     //压缩视频
     NSData *videoData = [NSData dataWithContentsOfURL:url];    //视频上传
 //    if (lengthTime >10.0f) {
@@ -633,13 +770,16 @@
         long long num = [GDUtils getLongNumFromDate:[NSDate date]];
         NSString* code = [GDUtils ret32bitString];
         NSString *fileName = [NSString stringWithFormat:@"%@-%lld-%@.mp4",[GDUtils readUser].token,num,code];
-        NSDictionary *dict = @{@"token":[GDUtils readUser].token};
-        [AFUploadFile upLoadToUrlString:@"http://139.196.41.31:8080/GDLT/appservice/basicController/uploadFile" parameters:dict fileData:videoData name:@"file" fileName:fileName mimeType:@"video/quicktime" response:JSON progress:^(NSProgress *uploadProgress) {
+        NSDictionary *dict = @{@"token":[GDUtils readUser].token,@"userId":@([GDUtils readUser].userId)};
+        [AFUploadFile upLoadToUrlString:[NSString stringWithFormat:@"%@/appservice/basicController/uploadFile",PIC_UPDATE] parameters:dict fileData:videoData name:@"file" fileName:fileName mimeType:@"video/quicktime" response:JSON progress:^(NSProgress *uploadProgress) {
             
         } success:^(NSURLSessionDataTask *task, id responseObject) {
-            
+            [self showVideoHidden:NO];
+
             NSLog(@"上传成功%@",responseObject);
-            
+            if (responseObject) {
+                _fileVideo = responseObject[@"data"][@"path"];
+            }
             
         } failure:^(NSURLSessionDataTask *task, NSError *error) {
             
@@ -650,7 +790,7 @@
 //    }
     
 }
-// 获取视频时间
+#pragma mark - 获取视频时间
 - (CGFloat) getVideoLength:(NSURL *)URL
 {
     AVURLAsset *avUrl = [AVURLAsset assetWithURL:URL];
@@ -669,29 +809,34 @@
     AVAssetExportSession *exportSession= [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPresetMediumQuality];
     exportSession.outputURL = outputURL;
     exportSession.outputFileType = AVFileTypeMPEG4;
+    
+    DLog(@"outputURL--->%@",outputURL);
+
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void) {
         switch (exportSession.status)
         {
             case AVAssetExportSessionStatusUnknown:
+                DLog(@"StatusUnknown");
                 break;
-            case AVAssetExportSessionStatusWaiting:
+            case AVAssetExportSessionStatusWaiting:DLog(@"StatusWaiting");
                 break;
-            case AVAssetExportSessionStatusExporting:
+            case AVAssetExportSessionStatusExporting:DLog(@"StatusExporting");
                 break;
             case AVAssetExportSessionStatusCompleted: {
+                DLog(@"Completed");
                 _videoFilePath = outputURL;
-                [self showVideoHidden:NO];
 
                 [self uploadVideo:outputURL];
                 break;
             }
-            case AVAssetExportSessionStatusFailed:
+            case AVAssetExportSessionStatusFailed:DLog(@"Failed");
+
                 break;
         }
     }];
 }
 
-// 获取视频的大小
+#pragma mark - 获取视频的大小
 - (CGFloat) getFileSize:(NSString *)path
 {
     NSFileManager *fileManager = [[NSFileManager alloc] init] ;
@@ -728,14 +873,13 @@
     }
 }
 
-
 -(void)setConstant{
     
     self.picView.picspathArr = self.picspathArr;
-    if ((self.picspathArr.count + 1)%4 == 0) {
-        self.picViewHit.constant = (self.picspathArr.count + 1)/4 * ((self.picView.frame.size.width - 40)/4 + 10);
+    if ((self.picspathArr.count + 1)%3 == 0) {
+        self.picViewHit.constant = (self.picspathArr.count + 1)/3 * ((self.picView.frame.size.width - 30)/3 + 10);
     }else{
-        self.picViewHit.constant = ((self.picspathArr.count + 1)/4 + 1) * ((self.picView.frame.size.width - 40)/4 + 10);
+        self.picViewHit.constant = ((self.picspathArr.count + 1)/3 + 1) * ((self.picView.frame.size.width - 30)/3 + 10);
     }
     CGRect frame = self.picView.pic_collection.frame;
     frame.size.height = self.picViewHit.constant;
@@ -770,13 +914,32 @@
     } completion:nil];
     
 }
+
+#pragma mark -textViewdelegate
+
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    if ([textView.text isEqualToString:@"请输入你要发布的内容"]) {
+        textView.text = @"";
+    }
+}
+-(void)textViewDidEndEditing:(UITextView *)textView{
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"请输入你要发布的内容";
+    }
+}
+
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         //在这里做你响应return键的代码
         [textView resignFirstResponder];
 //        return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
     }
-    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+
     return YES;
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

@@ -11,6 +11,7 @@
 @interface GDReplyCommentRequest : CCBaseRequest
 - (instancetype) initWithArticleId:(NSInteger)articleId
                          CommentId:(NSInteger)commentId
+                            Title:(NSString *)title
                             Attach:(NSString *)attach
                            Content:(NSString *)content;
 @end
