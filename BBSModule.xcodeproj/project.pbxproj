@@ -122,6 +122,8 @@
 		F46FA07E1F13990A001E900A /* GDGetEditArticleRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F46FA07D1F13990A001E900A /* GDGetEditArticleRequest.m */; };
 		F471735A1F258E1200DB915B /* server.cer in Resources */ = {isa = PBXBuildFile; fileRef = F47173591F258E1200DB915B /* server.cer */; };
 		F471735C1F25D73400DB915B /* tomcat.cer in Resources */ = {isa = PBXBuildFile; fileRef = F471735B1F25D73400DB915B /* tomcat.cer */; };
+		F471C7C91F3DB142007644FD /* native.html in Resources */ = {isa = PBXBuildFile; fileRef = F471C7C51F3DB142007644FD /* native.html */; };
+		F471C7CA1F3DB142007644FD /* GDOCJSWebViewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F471C7C71F3DB142007644FD /* GDOCJSWebViewVC.m */; };
 		F4D887731F066065006CE493 /* sg_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D887651F066065006CE493 /* sg_normal@2x.png */; };
 		F4D887741F066065006CE493 /* sg_seleted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4D887661F066065006CE493 /* sg_seleted@2x.png */; };
 		F4D887751F066065006CE493 /* SGAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D887681F066065006CE493 /* SGAssetModel.m */; };
@@ -411,6 +413,9 @@
 		F46FA07D1F13990A001E900A /* GDGetEditArticleRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDGetEditArticleRequest.m; sourceTree = "<group>"; };
 		F47173591F258E1200DB915B /* server.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = server.cer; sourceTree = "<group>"; };
 		F471735B1F25D73400DB915B /* tomcat.cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tomcat.cer; sourceTree = "<group>"; };
+		F471C7C51F3DB142007644FD /* native.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = native.html; sourceTree = "<group>"; };
+		F471C7C61F3DB142007644FD /* GDOCJSWebViewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDOCJSWebViewVC.h; sourceTree = "<group>"; };
+		F471C7C71F3DB142007644FD /* GDOCJSWebViewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDOCJSWebViewVC.m; sourceTree = "<group>"; };
 		F4A0E9621F03C36500803A38 /* GDModule.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDModule.pch; sourceTree = "<group>"; };
 		F4D887651F066065006CE493 /* sg_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sg_normal@2x.png"; sourceTree = "<group>"; };
 		F4D887661F066065006CE493 /* sg_seleted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sg_seleted@2x.png"; sourceTree = "<group>"; };
@@ -853,6 +858,17 @@
 			path = video;
 			sourceTree = "<group>";
 		};
+		F471C7C81F3DB142007644FD /* HTML */ = {
+			isa = PBXGroup;
+			children = (
+				F471C7C51F3DB142007644FD /* native.html */,
+				F471C7C61F3DB142007644FD /* GDOCJSWebViewVC.h */,
+				F471C7C71F3DB142007644FD /* GDOCJSWebViewVC.m */,
+			);
+			name = HTML;
+			path = ../../../IOS/BBSModule/BBSPosts/HTML;
+			sourceTree = "<group>";
+		};
 		F4D887631F066065006CE493 /* Third */ = {
 			isa = PBXGroup;
 			children = (
@@ -1015,6 +1031,7 @@
 		F4ECBA6F1F01236C001F3FC9 /* BBSPosts */ = {
 			isa = PBXGroup;
 			children = (
+				F471C7C81F3DB142007644FD /* HTML */,
 				F42913A51F0E4CFA0000D09A /* Common */,
 				F42913521F0E438A0000D09A /* Obj */,
 				F41576221F0CB3600054BD36 /* request */,
@@ -1194,6 +1211,7 @@
 				F4D887731F066065006CE493 /* sg_normal@2x.png in Resources */,
 				F4ECBA491F012292001F3FC9 /* Assets.xcassets in Resources */,
 				F4D887BE1F067665006CE493 /* GDPeratingPostView.xib in Resources */,
+				F471C7C91F3DB142007644FD /* native.html in Resources */,
 				F4D887741F066065006CE493 /* sg_seleted@2x.png in Resources */,
 				F4D887961F06646F006CE493 /* GD_MyselfCell.xib in Resources */,
 				F4D887AB1F066538006CE493 /* GDPersonalCenterCell.xib in Resources */,
@@ -1286,6 +1304,7 @@
 				F4D887771F066065006CE493 /* SGCollectionController.m in Sources */,
 				F42913DC1F0E4EE70000D09A /* MJRefreshComponent.m in Sources */,
 				F40935DF1F17914C00974AE8 /* GDMyCommentObj.m in Sources */,
+				F471C7CA1F3DB142007644FD /* GDOCJSWebViewVC.m in Sources */,
 				F40D6D4F1F06AA0A003E58F6 /* GDChooseFriendCell.m in Sources */,
 				F42913701F0E4A5A0000D09A /* MJFoundation.m in Sources */,
 				F42913DB1F0E4EE70000D09A /* MJRefreshBackFooter.m in Sources */,

@@ -1,21 +1,28 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8a999a32-25b7-6149-add2-df17adb92a99++1651",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2818768FC9CC57020FB40D9D802694F773D9E290",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
     "8a999a32-25b7-6149-add2-df17adb92a99++1651" : {
 
     }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "8a999a32-25b7-6149-add2-df17adb92a99++1651" : 9223372036854775807
+    "8a999a32-25b7-6149-add2-df17adb92a99++1651" : 9223372036854775807,
+    "2818768FC9CC57020FB40D9D802694F773D9E290" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "04B005FD-E37F-4B1A-88FF-259EA20EA223",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "8a999a32-25b7-6149-add2-df17adb92a99++1651" : "IOS\/"
+    "8a999a32-25b7-6149-add2-df17adb92a99++1651" : "IOS\/",
+    "2818768FC9CC57020FB40D9D802694F773D9E290" : "BBSModule\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "BBSModule",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "BBSModule.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SimonLike\/BBSModule.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2818768FC9CC57020FB40D9D802694F773D9E290"
+    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/svn.mcfish.cn:446\/svn\/project",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",

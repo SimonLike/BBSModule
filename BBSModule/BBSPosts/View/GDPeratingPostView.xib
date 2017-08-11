@@ -105,7 +105,7 @@
                         </button>
                         <button opaque="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="58j-qs-obC">
                             <rect key="frame" x="328" y="0.0" width="47" height="49"/>
-                            <state key="normal" image="module-jp"/>
+                            <state key="normal" image="module-jp2"/>
                             <connections>
                                 <action selector="cz_click:" destination="iN0-l3-epB" eventType="touchUpInside" id="Snu-td-k0e"/>
                             </connections>
@@ -175,6 +175,7 @@
         <image name="module-@" width="28" height="28"/>
         <image name="module-bt" width="60" height="26"/>
         <image name="module-jp" width="28" height="28"/>
+        <image name="module-jp2" width="28" height="28"/>
         <image name="module_tpicon" width="28" height="28"/>
         <image name="module_videobtn" width="28" height="28"/>
         <image name="module_yyicon" width="28" height="28"/>

@@ -19,7 +19,7 @@
     _ritTable.layer.borderWidth = 1;
     _ritTable.layer.borderColor = RGBCOLOR16(0xeeeeee).CGColor;
     _ritTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _ritArray = @[@"回复我的",@"@我的",@"我的评论",@"个人中心"];
+    _ritArray = @[@"回复我的",@"@我的",@"我的评论",@"个人中心",@"OCAndJS"];
 }
 
 +(instancetype) initRitView{

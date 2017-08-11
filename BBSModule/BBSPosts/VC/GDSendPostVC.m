@@ -184,11 +184,11 @@
     
     //添加操作按钮View
     _peratingPostView = [GDPeratingPostView initPeratingPostView];
-    _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, 50);
+    _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50);
     _peratingPostView.layer.borderColor = RGBCOLOR16(0xeeeeee).CGColor;
     _peratingPostView.layer.borderWidth = 1;
     [self.view addSubview:_peratingPostView];
-    _peratingPostView.hidden = YES;
+//    _peratingPostView.hidden = YES;
     
     //操作
     _peratingPostView.ppBlock = ^(UIButton *btn,NSInteger tag) {
@@ -295,7 +295,20 @@
                 
             }
         }else if (tag == 16){//键盘
-            
+            btn.selected = !btn.selected;
+            if (btn.selected) {
+                if (!ws.bti_text.hidden) {
+                    [ws.bti_text becomeFirstResponder];
+                }else{
+                    [ws.textView becomeFirstResponder];
+                }
+            }else{
+                if (!ws.bti_text.hidden) {
+                    [ws.bti_text resignFirstResponder];
+                }else{
+                    [ws.textView resignFirstResponder];
+                }
+            }
         }
     };
     _peratingPostView.speakBlock = ^(NSString *spkType) {
@@ -398,10 +411,12 @@
         self.btiHitCont.constant = 0;
         self.bti_topCont.constant = 0;
         self.bti_text.hidden = YES;
+        [_peratingPostView.biaoti_btn setImage:[UIImage imageNamed:@"module-bt"] forState:UIControlStateNormal];
     }else{
         self.btiHitCont.constant = 36;
         self.bti_topCont.constant = 25;
         self.bti_text.hidden = NO;
+        [_peratingPostView.biaoti_btn setImage:[UIImage imageNamed:@"module-btselected"] forState:UIControlStateNormal];
     }
 }
 //语音
@@ -684,8 +699,8 @@
             
             [picker dismissViewControllerAnimated:YES completion:nil];
             
-            DLog(@"shipinfilePath--->%@",newVideoUrl);
-
+            DLog(@"shipinfilePath--->%@-->%@",newVideoUrl,[sourceURL absoluteString]);
+            DLog(@"qiansourceURL---->%.2fMB",[self fileSize:sourceURL]);
             [self convertVideoQuailtyWithInputURL:sourceURL outputURL:newVideoUrl completeHandler:nil];
             
         }];
@@ -800,7 +815,10 @@
 }
 
 #pragma mark - 视频压缩
-
+- (CGFloat)fileSize:(NSURL *)path
+{
+    return [[NSData dataWithContentsOfURL:path] length]/1024.00 /1024.00;
+}
 - (void)convertVideoQuailtyWithInputURL:(NSURL*)inputURL
                                outputURL:(NSURL*)outputURL
                          completeHandler:(void (^)(AVAssetExportSession*))handler
@@ -825,6 +843,7 @@
             case AVAssetExportSessionStatusCompleted: {
                 DLog(@"Completed");
                 _videoFilePath = outputURL;
+                DLog(@"hou---->%.2fMB",[self fileSize:_videoFilePath]);
 
                 [self uploadVideo:outputURL];
                 break;
@@ -848,6 +867,18 @@
     }
     return filesize;
 }
+
+- (NSDictionary *)getVideoInfoWithSourcePath:(NSString *)path{
+    AVURLAsset * asset = [AVURLAsset assetWithURL:[NSURL fileURLWithPath:path]];
+    CMTime   time = [asset duration];
+    int seconds = ceil(time.value/time.timescale);
+    
+    NSInteger   fileSize = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil].fileSize;
+    
+    return @{@"size" : @(fileSize),
+             @"duration" : @(seconds)};
+}
+
 #pragma mark - 获取当前时间
 - (NSString *)getCurrentTime{
     
@@ -895,6 +926,7 @@
     
     _peratingPostView.hidden = NO;
     _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height - keyboardFrame.size.height - 50, self.view.frame.size.width, 50);
+    [_peratingPostView.jianpan_btn setImage:[UIImage imageNamed:@"module-jp"] forState:UIControlStateNormal];
 
     [UIView animateWithDuration:duration delay:0 options:option animations:^{
         [_peratingPostView layoutIfNeeded];
@@ -903,13 +935,14 @@
 //恢复键盘
 -(void)closeKeyboard:(NSNotification *)notification{
    
-    _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height , self.view.frame.size.width, 50);
+    _peratingPostView.frame = CGRectMake(0, self.view.frame.size.height - 50, self.view.frame.size.width, 50);
+    [_peratingPostView.jianpan_btn setImage:[UIImage imageNamed:@"module-jp2"] forState:UIControlStateNormal];
 
     NSTimeInterval duration = [self duration:notification];
     UIViewAnimationOptions option = [self option:notification];
     [UIView animateWithDuration:duration delay:0 options:option animations:^{
         [_peratingPostView layoutIfNeeded];
-        _peratingPostView.hidden = YES;
+//        _peratingPostView.hidden = YES;
 
     } completion:nil];
     

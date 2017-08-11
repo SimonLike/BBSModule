@@ -21,6 +21,7 @@
 #import "GDDeleteArticleRequest.h"
 #import "GDTextAlertView.h"
 #import "GDQuickReplyArticleRequest.h"
+#import "GDOCJSWebViewVC.h"
 
 @interface GDModuleHomeVC (){
     
@@ -133,6 +134,9 @@
             [ws.navigationController pushViewController:vc animated:YES];
         }else if (tag == 3){//,个人中心
             GDPersonalCenterVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDPersonalCenter"];
+            [ws.navigationController pushViewController:vc animated:YES];
+        }else if (tag == 4){//,
+            GDOCJSWebViewVC *vc = [[GDOCJSWebViewVC alloc] init];
             [ws.navigationController pushViewController:vc animated:YES];
         }
         ws.ritView.hidden = YES;

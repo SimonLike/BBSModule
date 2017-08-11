@@ -21,9 +21,13 @@
     
     //初始化设置测试用户信息
     GDUserObj *userObj = [[GDUserObj alloc] init];
-    userObj.userId = 166;
-    userObj.token = @"123";
-    userObj.projectId = 94;
+//    userObj.userId = 166;
+//    userObj.token = @"123";
+//    userObj.projectId = 94;
+
+    userObj.userId = 202;
+    userObj.token = @"8E7F3711224943CF931E0C07288A9A2A";
+    userObj.projectId = 1278;
     [GDUtils archiveUser:userObj];
     
     GDModuleHomeVC *vc = [[UIStoryboard storyboardWithName:@"BBSPosts" bundle:nil] instantiateViewControllerWithIdentifier:@"GDModuleHome"];
