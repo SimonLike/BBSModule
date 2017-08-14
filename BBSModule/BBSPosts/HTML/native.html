@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>OC、JS混编</title>
+
+    <style type="text/css">
+	.btn{
+		width: 80%;
+		height: 42px;
+		background: #5cc00c;
+		text-align: center;
+		margin-bottom: 15px;
+		margin-left: 10%;
+	}
+    </style>
+</head>
+
+<body>
+	<button class="btn" onclick="jscandoiOS(1)" >相机</button>
+    <button class="btn" onclick="jscandoiOS(2)" >相册</button>
+    <button class="btn" onclick="jscandoiOS(3)" >拍摄视频</button>
+    <button class="btn" onclick="jscandoiOS(4)" >本地视频</button>
+    <button class="btn" onclick="jscandoiOS(5)" >开始录音</button>
+    <button class="btn" onclick="jscandoiOS(6)" >停止录音</button>
+	<p id="label"> </p>
+</body>
+
+<script type="text/javascript">
+/*
+*调用原生
+*/
+function jscandoiOS(tag){
+
+}
+
+/**
+ *  接收原生传值
+ *  类型 type:
+ *  @param 1    相机
+ *  @param 2    相册
+ *  @param 3    拍摄视频
+ *  @param 4    本地视频
+ *  @param 5    开始录音
+ *  @param 6    停止录音
+ *
+ */
+function nativeFile(file){
+    
+    var type = file['type'];
+    
+	var plab = document.getElementById("label");
+    plab.innerHTML = file['data'][1];
+
+	// var arr = new Array(file);
+	// alert(arr);
+
+}
+
+</script>
+</html>
